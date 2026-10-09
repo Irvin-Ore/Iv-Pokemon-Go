@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéIV Master - PvP Ranker & Pokédex</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            pokeDark: '#0f172a',
+            pokeCard: '#1e293b',
+            pokeBorder: '#334155',
+            pokeAccent: '#3b82f6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 9999px;
+      background: #3b82f6;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- NAVBAR -->
+  <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <i data-lucide="shield" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
+            PokéIV <span class="text-blue-400">Master</span>
+          </h1>
+          <p class="text-xs text-slate-400">PvP IV Ranker & Movesets</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <span id="db-status-badge" class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center gap-1.5 font-medium">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          Cargando datos...
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER DE AVISO SI EL NAVEGADOR BLOQUEA FETCH LOCAL -->
+  <div id="local-cors-alert" class="hidden bg-amber-950/70 border-b border-amber-600/40 p-4 text-xs text-amber-200">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0"></i>
+        <span>
+          Si abriste el archivo con doble clic (<code>file://</code>), el navegador puede bloquear la lectura de <code>pokemon.json</code> por seguridad.
+        </span>
+      </div>
+      <label class="cursor-pointer bg-amber-600 hover:bg-amber-500 text-white font-semibold px-3 py-1.5 rounded-lg shrink-0 transition flex items-center gap-1.5 shadow">
+        <i data-lucide="upload" class="w-4 h-4"></i>
+        Seleccionar pokemon.json
+        <input type="file" id="manual-file-input" accept=".json" class="hidden">
+      </label>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- PANEL IZQUIERDO: SELECCIÓN & SLIDERS -->
+    <div class="lg:col-span-5 space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        
+        <!-- Búsqueda y Selección de Pokémon -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Seleccionar Pokémon</label>
+          <div class="relative">
+            <input type="text" id="poke-search" placeholder="Escribe para buscar (ej: Swampert, Giratina...)"
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
+            <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
+          </div>
+          <select id="poke-select" class="w-full mt-2 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500 text-slate-200 cursor-pointer">
+            <option value="">-- Esperando base de datos --</option>
+          </select>
+        </div>
+
+        <!-- Selector de Liga -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
+          <div class="grid grid-cols-3 gap-2" id="league-buttons">
+            <button data-league="great" class="league-btn active py-2 px-3 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Súper (1500)</span>
+              <span class="text-[10px] font-normal text-blue-300">Great League</span>
+            </button>
+            <button data-league="ultra" class="league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Ultra (2500)</span>
+              <span class="text-[10px] font-normal text-slate-500">Ultra League</span>
+            </button>
+            <button data-league="master" class="league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Máster (Sin lím.)</span>
+              <span class="text-[10px] font-normal text-slate-500">Master League</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sliders de IVs -->
+        <div class="pt-2 border-t border-slate-800/80 space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Valores Individuales (IVs)</span>
+            <div class="flex gap-1.5">
+              <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/15/15</button>
+              <button id="preset-hundo" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">15/15/15</button>
+            </div>
+          </div>
+
+          <!-- Ataque -->
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-red-400 font-bold">Ataque</span>
+              <span id="atk-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-red-300">0</span>
+            </div>
+            <input type="range" id="iv-atk" min="0" max="15" value="0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+          </div>
+
+          <!-- Defensa -->
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-blue-400 font-bold">Defensa</span>
+              <span id="def-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-blue-300">15</span>
+            </div>
+            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+          </div>
+
+          <!-- Stamina / Salud -->
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-emerald-400 font-bold">Salud (HP)</span>
+              <span id="sta-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-emerald-300">15</span>
+            </div>
+            <input type="range" id="iv-sta" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tarjeta de ataques recomendados PvP -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
+          Ataques Recomendados PvP
+        </h3>
+        <div id="moveset-container" class="space-y-2 text-xs">
+          <p class="text-slate-500 italic">Selecciona un Pokémon para ver sus movimientos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL DERECHO: RESULTADOS Y RANKING -->
+    <div class="lg:col-span-7 space-y-5">
+      
+      <!-- RESUMEN DEL RANKING -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
+          <div>
+            <h2 id="res-poke-name" class="text-2xl font-black tracking-wide text-white">---</h2>
+            <div id="res-types" class="flex gap-1.5 mt-1.5"></div>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
+            <div id="res-rank" class="text-3xl font-black text-blue-400">#--</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+          <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">PC Final</span>
+            <p id="res-cp" class="text-lg font-bold text-white mt-0.5">--</p>
+          </div>
+          <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Nivel</span>
+            <p id="res-level" class="text-lg font-bold text-white mt-0.5">--</p>
+          </div>
+          <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Stat Product</span>
+            <p id="res-product" class="text-lg font-bold text-emerald-400 mt-0.5">--</p>
+          </div>
+          <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">% Máximo</span>
+            <p id="res-percent" class="text-lg font-bold text-cyan-400 mt-0.5">--%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLA DEL TOP 10 DE COMBINACIONES -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
+          <span class="text-[11px] text-slate-500">De 4,096 combinaciones</span>
+        </div>
+        <div class="overflow-x-auto max-h-[360px] overflow-y-auto rounded-xl border border-slate-800">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-950 text-slate-400 uppercase font-semibold sticky top-0 border-b border-slate-800">
+              <tr>
+                <th class="p-2.5">Rango</th>
+                <th class="p-2.5">IVs (A/D/S)</th>
+                <th class="p-2.5">Nivel</th>
+                <th class="p-2.5">PC</th>
+                <th class="p-2.5">Stat Product</th>
+                <th class="p-2.5">% Máx</th>
+              </tr>
+            </thead>
+            <tbody id="top-ranks-body" class="divide-y divide-slate-800/60 bg-slate-900/60 font-mono">
+              <tr>
+                <td colspan="6" class="p-4 text-center text-slate-500 italic">Cargando ranking...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // CPM OFICIALES DE POKÉMON GO (Niveles 1.0 a 51.0)
+    const CPM_MAP = {
+      1.0: 0.094, 1.5: 0.135137432, 2.0: 0.16639787, 2.5: 0.192650919, 3.0: 0.21573247,
+      3.5: 0.236572661, 4.0: 0.25572005, 4.5: 0.273530381, 5.0: 0.29024988, 5.5: 0.306057377,
+      6.0: 0.3210876, 6.5: 0.335445036, 7.0: 0.34921268, 7.5: 0.362457751, 8.0: 0.37523559,
+      8.5: 0.387592406, 9.0: 0.39956728, 9.5: 0.411193551, 10.0: 0.42250001, 10.5: 0.432926419,
+      11.0: 0.44310755, 11.5: 0.453059958, 12.0: 0.46279839, 12.5: 0.472336083, 13.0: 0.48168495,
+      13.5: 0.4908558, 14.0: 0.49985844, 14.5: 0.508701765, 15.0: 0.51739395, 15.5: 0.525942511,
+      16.0: 0.53435433, 16.5: 0.542635767, 17.0: 0.55079269, 17.5: 0.558830576, 18.0: 0.56675452,
+      18.5: 0.574569153, 19.0: 0.58227891, 19.5: 0.589887917, 20.0: 0.59740001, 20.5: 0.604818814,
+      21.0: 0.61215729, 21.5: 0.619418992, 22.0: 0.62660712, 22.5: 0.633724976, 23.0: 0.640776,
+      23.5: 0.647763197, 24.0: 0.65468997, 24.5: 0.66155949, 25.0: 0.66837322, 25.5: 0.675133489,
+      26.0: 0.68184144, 26.5: 0.688499969, 27.0: 0.6951105, 27.5: 0.701675175, 28.0: 0.70819544,
+      28.5: 0.714673239, 29.0: 0.7211099, 29.5: 0.727507388, 30.0: 0.73386624, 30.5: 0.736965839,
+      31.0: 0.74005878, 31.5: 0.743152597, 32.0: 0.7462464, 32.5: 0.749340203, 33.0: 0.752434,
+      33.5: 0.755527797, 34.0: 0.7586216, 34.5: 0.761715403, 35.0: 0.76480917, 35.5: 0.767902973,
+      36.0: 0.7709968, 36.5: 0.774090603, 37.0: 0.7771844, 37.5: 0.780278197, 38.0: 0.783372,
+      38.5: 0.786465803, 39.0: 0.7895596, 39.5: 0.792653397, 40.0: 0.79574714, 40.5: 0.79878235,
+      41.0: 0.80181756, 41.5: 0.80485277, 42.0: 0.80788798, 42.5: 0.81092319, 43.0: 0.8139584,
+      43.5: 0.81699361, 44.0: 0.82002882, 44.5: 0.82306403, 45.0: 0.82609924, 45.5: 0.82913445,
+      46.0: 0.83216966, 46.5: 0.83520487, 47.0: 0.83824008, 47.5: 0.84127529, 48.0: 0.8443105,
+      48.5: 0.84734571, 49.0: 0.85038092, 49.5: 0.85341613, 50.0: 0.85645134, 50.5: 0.85948655, 51.0: 0.86252176
+    };
+
+    let pokemonDatabase = [];
+    let selectedPokemon = null;
+    let selectedLeague = 'great'; // 'great', 'ultra', 'master'
+
+    const LEAGUE_CAPS = {
+      great: 1500,
+      ultra: 2500,
+      master: 10000
+    };
+
+    // FORMULA OFICIAL DE CP DE POKÉMON GO
+    function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
+      const atk = baseAtk + ivAtk;
+      const def = baseDef + ivDef;
+      const sta = baseSta + ivSta;
+      const cp = Math.floor((atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(cpm, 2)) / 10);
+      return Math.max(10, cp);
+    }
+
+    // CARGA DE DATOS (Intenta fetch('pokemon.json'))
+    async function loadDatabase() {
+      const statusBadge = document.getElementById('db-status-badge');
+      try {
+        const res = await fetch('pokemon.json');
+        if (!res.ok) throw new Error('No se pudo cargar pokemon.json directamente');
+        const rawData = await res.json();
+        processRawData(rawData);
+      } catch (err) {
+        console.warn('Fetch falló (normal en protocolos locales file://):', err);
+        document.getElementById('local-cors-alert').classList.remove('hidden');
+        statusBadge.className = 'px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center gap-1.5 font-medium';
+        statusBadge.innerHTML = '<span>⚠️ Sube tu pokemon.json</span>';
+      }
+    }
+
+    // Normalizar formato de PvPoke a nuestro modelo
+    function processRawData(rawData) {
+      pokemonDatabase = rawData.map(p => {
+        return {
+          id: p.dex || p.speciesId,
+          speciesId: p.speciesId,
+          name: p.speciesName || p.name || p.speciesId,
+          types: p.types || [],
+          baseStats: {
+            atk: p.baseStats ? p.baseStats.atk : 100,
+            def: p.baseStats ? p.baseStats.def : 100,
+            sta: p.baseStats ? p.baseStats.hp : 100
+          },
+          fastMoves: p.fastMoves || [],
+          chargedMoves: p.chargedMoves || [],
+          eliteMoves: p.eliteMoves || []
+        };
+      });
+
+      const statusBadge = document.getElementById('db-status-badge');
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
+      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
+
+      populatePokemonSelect(pokemonDatabase);
+      if (pokemonDatabase.length > 0) {
+        selectPokemon(pokemonDatabase[0].speciesId);
+      }
+    }
+
+    function populatePokemonSelect(list) {
+      const select = document.getElementById('poke-select');
+      select.innerHTML = list.map(p => `<option value="${p.speciesId}">${p.name}</option>`).join('');
+    }
+
+    // FILTRO DE BÚSQUEDA
+    document.getElementById('poke-search').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = pokemonDatabase.filter(p => p.name.toLowerCase().includes(q) || p.speciesId.toLowerCase().includes(q));
+      populatePokemonSelect(filtered);
+      if (filtered.length > 0) {
+        selectPokemon(filtered[0].speciesId);
+      }
+    });
+
+    document.getElementById('poke-select').addEventListener('change', (e) => {
+      selectPokemon(e.target.value);
+    });
+
+    // SUBIDA MANUAL SI EL NAVEGADOR BLOQUEA EL FETCH LOCAL
+    document.getElementById('manual-file-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          processRawData(parsed);
+          document.getElementById('local-cors-alert').classList.add('hidden');
+        } catch (err) {
+          alert('Error al leer el JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    function selectPokemon(speciesId) {
+      selectedPokemon = pokemonDatabase.find(p => p.speciesId === speciesId);
+      if (!selectedPokemon) return;
+
+      document.getElementById('res-poke-name').innerText = selectedPokemon.name;
+      
+      // Renderizar badges de tipos
+      const typeContainer = document.getElementById('res-types');
+      typeContainer.innerHTML = selectedPokemon.types.map(t => 
+        `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t}</span>`
+      ).join('');
+
+      renderMovesets();
+      calculateRankings();
+    }
+
+    function renderMovesets() {
+      const container = document.getElementById('moveset-container');
+      if (!selectedPokemon) return;
+
+      const eliteList = selectedPokemon.eliteMoves || [];
+      const fastHtml = selectedPokemon.fastMoves.slice(0, 3).map(m => {
+        const isElite = eliteList.includes(m);
+        return `<span class="inline-flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded text-slate-200">
+          ${m} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
+        </span>`;
+      }).join(' ');
+
+      const chargedHtml = selectedPokemon.chargedMoves.slice(0, 4).map(m => {
+        const isElite = eliteList.includes(m);
+        return `<span class="inline-flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded text-slate-200">
+          ${m} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
+        </span>`;
+      }).join(' ');
+
+      container.innerHTML = `
+        <div>
+          <span class="text-slate-400 text-[10px] uppercase font-bold block mb-1">Ataques Rápidos:</span>
+          <div class="flex flex-wrap gap-1">${fastHtml || '<span class="text-slate-500">No disponibles</span>'}</div>
+        </div>
+        <div class="pt-2 border-t border-slate-800/60">
+          <span class="text-slate-400 text-[10px] uppercase font-bold block mb-1">Ataques Cargados Viables:</span>
+          <div class="flex flex-wrap gap-1">${chargedHtml || '<span class="text-slate-500">No disponibles</span>'}</div>
+        </div>
+      `;
+    }
+
+    // SELECTORES DE LIGA
+    document.querySelectorAll('.league-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.league-btn').forEach(b => {
+          b.className = 'league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5';
+        });
+        btn.className = 'league-btn active py-2 px-3 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5';
+        selectedLeague = btn.dataset.league;
+        calculateRankings();
+      });
+    });
+
+    // EVENTOS DE SLIDERS DE IVs
+    ['atk', 'def', 'sta'].forEach(stat => {
+      const slider = document.getElementById(`iv-${stat}`);
+      const valLabel = document.getElementById(`${stat}-val`);
+      slider.addEventListener('input', () => {
+        valLabel.innerText = slider.value;
+        calculateRankings();
+      });
+    });
+
+    document.getElementById('preset-pvp').addEventListener('click', () => {
+      setSliders(0, 15, 15);
+    });
+
+    document.getElementById('preset-hundo').addEventListener('click', () => {
+      setSliders(15, 15, 15);
+    });
+
+    function setSliders(a, d, s) {
+      document.getElementById('iv-atk').value = a;
+      document.getElementById('atk-val').innerText = a;
+      document.getElementById('iv-def').value = d;
+      document.getElementById('def-val').innerText = d;
+      document.getElementById('iv-sta').value = s;
+      document.getElementById('sta-val').innerText = s;
+      calculateRankings();
+    }
+
+    // ENCONTRAR MEJOR NIVEL PARA UNA COMBINACIÓN DADA
+    function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
+      let best = { level: 1, cp: 10, product: 0, cpm: CPM_MAP[1.0] };
+      const levels = Object.keys(CPM_MAP).map(Number).sort((a,b) => a - b);
+
+      for (let lvl of levels) {
+        if (lvl > 50) continue; // Límite estándar nivel 50
+        const cpm = CPM_MAP[lvl];
+        const cp = calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, cpm);
+        if (cp <= maxCp) {
+          const atk = (baseAtk + ivA) * cpm;
+          const def = (baseDef + ivD) * cpm;
+          const hp = Math.floor((baseSta + ivS) * cpm);
+          const product = atk * def * hp;
+          best = { level: lvl, cp, product, cpm };
+        } else {
+          break;
+        }
+      }
+      return best;
+    }
+
+    // CALCULAR RANKING COMPLETO (4,096 combinaciones)
+    function calculateRankings() {
+      if (!selectedPokemon) return;
+
+      const base = selectedPokemon.baseStats;
+      const maxCp = LEAGUE_CAPS[selectedLeague];
+
+      const currentA = parseInt(document.getElementById('iv-atk').value);
+      const currentD = parseInt(document.getElementById('iv-def').value);
+      const currentS = parseInt(document.getElementById('iv-sta').value);
+
+      const allCombos = [];
+
+      for (let a = 0; a <= 15; a++) {
+        for (let d = 0; d <= 15; d++) {
+          for (let s = 0; s <= 15; s++) {
+            const res = getBestStats(base.atk, base.def, base.sta, a, d, s, maxCp);
+            allCombos.push({
+              a, d, s,
+              level: res.level,
+              cp: res.cp,
+              product: res.product
+            });
+          }
+        }
+      }
+
+      // Ordenar de mayor a menor Stat Product
+      allCombos.sort((x, y) => y.product - x.product);
+
+      const maxProduct = allCombos[0].product || 1;
+      let userRank = 1;
+      let userResult = null;
+
+      allCombos.forEach((item, index) => {
+        item.rank = index + 1;
+        item.percent = ((item.product / maxProduct) * 100).toFixed(2);
+        if (item.a === currentA && item.d === currentD && item.s === currentS) {
+          userRank = item.rank;
+          userResult = item;
+        }
+      });
+
+      // Actualizar tarjeta de resultados
+      document.getElementById('res-rank').innerText = `#${userRank}`;
+      document.getElementById('res-cp').innerText = userResult.cp;
+      document.getElementById('res-level').innerText = `Nv. ${userResult.level}`;
+      document.getElementById('res-product').innerText = Math.round(userResult.product / 1000) + 'k';
+      document.getElementById('res-percent').innerText = `${userResult.percent}%`;
+
+      // Renderizar Top 10 en la tabla
+      const top10 = allCombos.slice(0, 10);
+      const tbody = document.getElementById('top-ranks-body');
+      tbody.innerHTML = top10.map(item => `
+        <tr class="hover:bg-slate-800/40 transition ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}">
+          <td class="p-2.5">#${item.rank}</td>
+          <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
+          <td class="p-2.5">${item.level}</td>
+          <td class="p-2.5">${item.cp}</td>
+          <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
+          <td class="p-2.5 text-cyan-400">${item.percent}%</td>
+        </tr>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // Iniciar carga
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadDatabase();
+    });
+  </script>
+</body>
+</html>
