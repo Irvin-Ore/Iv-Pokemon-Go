@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PokéIV Master - PvP Ranker & Pokédex</title>
+  <title>PokéIV Master - PvP Ranker & Evoluciones</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -33,6 +33,11 @@
       cursor: pointer;
       border: 2px solid #ffffff;
     }
+    /* Estilo para los inputs de tipo number */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      opacity: 1;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
@@ -48,7 +53,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokéIV <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">PvP IV Ranker & Movesets</p>
+          <p class="text-xs text-slate-400">PvP IV Ranker & Evoluciones</p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -66,7 +71,7 @@
       <div class="flex items-center gap-2">
         <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0"></i>
         <span>
-          Si abriste el archivo con doble clic (<code>file://</code>), el navegador puede bloquear la lectura de <code>pokemon.json</code> por seguridad.
+          Si abriste el archivo con doble clic (<code>file://</code>), el navegador puede bloquear <code>pokemon.json</code> por seguridad.
         </span>
       </div>
       <label class="cursor-pointer bg-amber-600 hover:bg-amber-500 text-white font-semibold px-3 py-1.5 rounded-lg shrink-0 transition flex items-center gap-1.5 shadow">
@@ -84,17 +89,19 @@
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
-        <!-- Búsqueda y Selección de Pokémon -->
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Seleccionar Pokémon</label>
+        <!-- MEJORA 1: BÚSQUEDA PREDICTIVA CON DROPDOWN EN VIVO -->
+        <div class="relative">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" placeholder="Escribe para buscar (ej: Swampert, Giratina...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Mega Charizard, Swampert...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
-          <select id="poke-select" class="w-full mt-2 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500 text-slate-200 cursor-pointer">
-            <option value="">-- Esperando base de datos --</option>
-          </select>
+
+          <!-- Menú desplegable flotante de resultados -->
+          <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto divide-y divide-slate-800">
+            <!-- Se llena dinámicamente -->
+          </div>
         </div>
 
         <!-- Selector de Liga -->
@@ -116,7 +123,7 @@
           </div>
         </div>
 
-        <!-- Sliders de IVs -->
+        <!-- MEJORA 2: SLIDERS + INPUT NUMÉRICO DIRECTO (0 a 15) -->
         <div class="pt-2 border-t border-slate-800/80 space-y-4">
           <div class="flex justify-between items-center">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Valores Individuales (IVs)</span>
@@ -127,28 +134,31 @@
           </div>
 
           <!-- Ataque -->
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-red-400 font-bold">Ataque</span>
-              <span id="atk-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-red-300">0</span>
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-red-400">Ataque</span>
+              <input type="number" id="num-atk" min="0" max="15" value="0"
+                class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-red-400 py-1 focus:outline-none focus:border-red-500">
             </div>
             <input type="range" id="iv-atk" min="0" max="15" value="0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- Defensa -->
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-blue-400 font-bold">Defensa</span>
-              <span id="def-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-blue-300">15</span>
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-blue-400">Defensa</span>
+              <input type="number" id="num-def" min="0" max="15" value="15"
+                class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
             <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- Stamina / Salud -->
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-emerald-400 font-bold">Salud (HP)</span>
-              <span id="sta-val" class="font-bold bg-slate-800 px-2 py-0.5 rounded text-emerald-300">15</span>
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-emerald-400">Salud (HP)</span>
+              <input type="number" id="num-sta" min="0" max="15" value="15"
+                class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-emerald-400 py-1 focus:outline-none focus:border-emerald-500">
             </div>
             <input type="range" id="iv-sta" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
@@ -168,13 +178,14 @@
       </div>
     </div>
 
-    <!-- PANEL DERECHO: RESULTADOS Y RANKING -->
+    <!-- PANEL DERECHO: RESULTADOS, CADENA EVOLUTIVA Y RANKING -->
     <div class="lg:col-span-7 space-y-5">
       
       <!-- RESUMEN DEL RANKING -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
           <div>
+            <!-- MEJORA 3: Nombre con MEGA formateado adelante -->
             <h2 id="res-poke-name" class="text-2xl font-black tracking-wide text-white">---</h2>
             <div id="res-types" class="flex gap-1.5 mt-1.5"></div>
           </div>
@@ -204,13 +215,24 @@
         </div>
       </div>
 
+      <!-- MEJORA 4: SECCIÓN DE CADENA EVOLUTIVA (Anterior y Posterior) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i data-lucide="git-branch" class="w-4 h-4 text-cyan-400"></i>
+          Cadena Evolutiva & Formas de la Familia
+        </h3>
+        <div id="evolution-container" class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+          <span class="text-slate-500 italic">No hay datos evolutivos.</span>
+        </div>
+      </div>
+
       <!-- TABLA DEL TOP 10 DE COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
           <span class="text-[11px] text-slate-500">De 4,096 combinaciones</span>
         </div>
-        <div class="overflow-x-auto max-h-[360px] overflow-y-auto rounded-xl border border-slate-800">
+        <div class="overflow-x-auto max-h-[320px] overflow-y-auto rounded-xl border border-slate-800">
           <table class="w-full text-left text-xs text-slate-300">
             <thead class="bg-slate-950 text-slate-400 uppercase font-semibold sticky top-0 border-b border-slate-800">
               <tr>
@@ -262,13 +284,39 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'great'; // 'great', 'ultra', 'master'
+    let selectedLeague = 'great';
 
     const LEAGUE_CAPS = {
       great: 1500,
       ultra: 2500,
       master: 10000
     };
+
+    // MEJORA 3: Función para formatear el nombre colocando "Mega" al inicio
+    function formatMegaName(name) {
+      if (!name) return '';
+      // Si contiene "(Mega X)" -> "Mega [Nombre] X"
+      if (/\(Mega\s*X\)/i.test(name)) {
+        const base = name.replace(/\(Mega\s*X\)/i, '').trim();
+        return `Mega ${base} X`;
+      }
+      // Si contiene "(Mega Y)" -> "Mega [Nombre] Y"
+      if (/\(Mega\s*Y\)/i.test(name)) {
+        const base = name.replace(/\(Mega\s*Y\)/i, '').trim();
+        return `Mega ${base} Y`;
+      }
+      // Si contiene "(Mega)" -> "Mega [Nombre]"
+      if (/\(Mega\)/i.test(name)) {
+        const base = name.replace(/\(Mega\)/i, '').trim();
+        return `Mega ${base}`;
+      }
+      // Si termina en " Mega" o contiene "_mega"
+      if (name.toLowerCase().endsWith(' mega')) {
+        const base = name.slice(0, -5).trim();
+        return `Mega ${base}`;
+      }
+      return name;
+    }
 
     // FORMULA OFICIAL DE CP DE POKÉMON GO
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
@@ -279,7 +327,7 @@
       return Math.max(10, cp);
     }
 
-    // CARGA DE DATOS (Intenta fetch('pokemon.json'))
+    // CARGA DE DATOS
     async function loadDatabase() {
       const statusBadge = document.getElementById('db-status-badge');
       try {
@@ -295,13 +343,17 @@
       }
     }
 
-    // Normalizar formato de PvPoke a nuestro modelo
+    // PROCESAMIENTO Y NORMALIZACIÓN DE DATOS
     function processRawData(rawData) {
       pokemonDatabase = rawData.map(p => {
+        const rawName = p.speciesName || p.name || p.speciesId;
+        const formattedName = formatMegaName(rawName);
+
         return {
-          id: p.dex || p.speciesId,
+          dex: p.dex || 0,
           speciesId: p.speciesId,
-          name: p.speciesName || p.name || p.speciesId,
+          name: formattedName,
+          family: p.family ? (p.family.id || p.family) : null,
           types: p.types || [],
           baseStats: {
             atk: p.baseStats ? p.baseStats.atk : 100,
@@ -318,32 +370,66 @@
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
       statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
-      populatePokemonSelect(pokemonDatabase);
       if (pokemonDatabase.length > 0) {
         selectPokemon(pokemonDatabase[0].speciesId);
       }
     }
 
-    function populatePokemonSelect(list) {
-      const select = document.getElementById('poke-select');
-      select.innerHTML = list.map(p => `<option value="${p.speciesId}">${p.name}</option>`).join('');
-    }
+    // MEJORA 1: BÚSQUEDA PREDICTIVA CON DROPDOWN FLOTANTE
+    const searchInput = document.getElementById('poke-search');
+    const searchDropdown = document.getElementById('search-dropdown');
 
-    // FILTRO DE BÚSQUEDA
-    document.getElementById('poke-search').addEventListener('input', (e) => {
+    searchInput.addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase().trim();
-      const filtered = pokemonDatabase.filter(p => p.name.toLowerCase().includes(q) || p.speciesId.toLowerCase().includes(q));
-      populatePokemonSelect(filtered);
-      if (filtered.length > 0) {
-        selectPokemon(filtered[0].speciesId);
+      if (!q) {
+        searchDropdown.classList.add('hidden');
+        return;
+      }
+
+      const matches = pokemonDatabase.filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        p.speciesId.toLowerCase().includes(q) ||
+        (p.dex && p.dex.toString() === q)
+      ).slice(0, 15); // Mostrar los primeros 15 resultados más relevantes
+
+      if (matches.length === 0) {
+        searchDropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic text-center">No se encontraron resultados</div>`;
+        searchDropdown.classList.remove('hidden');
+        return;
+      }
+
+      searchDropdown.innerHTML = matches.map(p => `
+        <div class="p-2.5 hover:bg-slate-800/80 cursor-pointer transition flex items-center justify-between text-xs" data-id="${p.speciesId}">
+          <div class="flex items-center gap-2">
+            <span class="text-slate-500 font-mono text-[10px]">#${p.dex || '??'}</span>
+            <span class="font-bold text-slate-200">${p.name}</span>
+          </div>
+          <div class="flex gap-1">
+            ${p.types.map(t => `<span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">${t}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      searchDropdown.classList.remove('hidden');
+    });
+
+    // Clic en un resultado del dropdown
+    searchDropdown.addEventListener('click', (e) => {
+      const item = e.target.closest('[data-id]');
+      if (!item) return;
+      const speciesId = item.dataset.id;
+      selectPokemon(speciesId);
+      searchDropdown.classList.add('hidden');
+    });
+
+    // Cerrar el dropdown al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+        searchDropdown.classList.add('hidden');
       }
     });
 
-    document.getElementById('poke-select').addEventListener('change', (e) => {
-      selectPokemon(e.target.value);
-    });
-
-    // SUBIDA MANUAL SI EL NAVEGADOR BLOQUEA EL FETCH LOCAL
+    // CARGA MANUAL EN CASO DE PROTOCOLO FILE://
     document.getElementById('manual-file-input').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -354,26 +440,72 @@
           processRawData(parsed);
           document.getElementById('local-cors-alert').classList.add('hidden');
         } catch (err) {
-          alert('Error al leer el JSON: ' + err.message);
+          alert('Error al leer el archivo JSON: ' + err.message);
         }
       };
       reader.readAsText(file);
     });
 
+    // SELECCIONAR POKÉMON Y ACTUALIZAR VISTA
     function selectPokemon(speciesId) {
       selectedPokemon = pokemonDatabase.find(p => p.speciesId === speciesId);
       if (!selectedPokemon) return;
 
+      searchInput.value = selectedPokemon.name;
       document.getElementById('res-poke-name').innerText = selectedPokemon.name;
       
-      // Renderizar badges de tipos
+      // Badges de tipos
       const typeContainer = document.getElementById('res-types');
       typeContainer.innerHTML = selectedPokemon.types.map(t => 
         `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t}</span>`
       ).join('');
 
+      renderEvolutionChain();
       renderMovesets();
       calculateRankings();
+    }
+
+    // MEJORA 4: CALCULAR Y RENDERIZAR LA CADENA EVOLUTIVA (Anteriores y Posteriores)
+    function renderEvolutionChain() {
+      const container = document.getElementById('evolution-container');
+      if (!selectedPokemon) return;
+
+      // Buscar parientes: por ID de familia de PvPoke o por coincidencia en Dex (+/- 1 y 2)
+      let relatives = [];
+      if (selectedPokemon.family) {
+        relatives = pokemonDatabase.filter(p => p.family === selectedPokemon.family);
+      }
+
+      if (relatives.length <= 1 && selectedPokemon.dex) {
+        // Fallback por rango de Pokédex si no está definido el familyId
+        relatives = pokemonDatabase.filter(p => p.dex && Math.abs(p.dex - selectedPokemon.dex) <= 2);
+      }
+
+      // Ordenar por número de dex y nombre
+      relatives.sort((a, b) => (a.dex || 0) - (b.dex || 0));
+
+      if (relatives.length === 0) {
+        container.innerHTML = `<span class="text-slate-500 italic">No se encontraron formas evolutivas vinculadas.</span>`;
+        return;
+      }
+
+      container.innerHTML = relatives.map((rel, idx) => {
+        const isCurrent = rel.speciesId === selectedPokemon.speciesId;
+        const arrow = (idx > 0) ? `<i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600"></i>` : '';
+        return `
+          ${arrow}
+          <button onclick="selectPokemon('${rel.speciesId}')"
+            class="px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition flex items-center gap-1.5
+            ${isCurrent 
+              ? 'bg-blue-600/20 border-blue-500 text-blue-300 shadow-sm' 
+              : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white'}">
+            <span class="text-[10px] font-mono text-slate-500">#${rel.dex || ''}</span>
+            <span>${rel.name}</span>
+          </button>
+        `;
+      }).join('');
+
+      lucide.createIcons();
     }
 
     function renderMovesets() {
@@ -419,41 +551,50 @@
       });
     });
 
-    // EVENTOS DE SLIDERS DE IVs
+    // MEJORA 2: SINCRONIZACIÓN DE SLIDERS CON INPUTS NUMÉRICOS (0 A 15)
     ['atk', 'def', 'sta'].forEach(stat => {
       const slider = document.getElementById(`iv-${stat}`);
-      const valLabel = document.getElementById(`${stat}-val`);
+      const numInput = document.getElementById(`num-${stat}`);
+
+      // Al mover el slider
       slider.addEventListener('input', () => {
-        valLabel.innerText = slider.value;
+        numInput.value = slider.value;
+        calculateRankings();
+      });
+
+      // Al escribir directamente en el input numérico
+      numInput.addEventListener('input', () => {
+        let val = parseInt(numInput.value);
+        if (isNaN(val)) val = 0;
+        if (val < 0) val = 0;
+        if (val > 15) val = 15;
+        slider.value = val;
+        numInput.value = val;
         calculateRankings();
       });
     });
 
-    document.getElementById('preset-pvp').addEventListener('click', () => {
-      setSliders(0, 15, 15);
-    });
-
-    document.getElementById('preset-hundo').addEventListener('click', () => {
-      setSliders(15, 15, 15);
-    });
+    // BOTONES DE PRESETS
+    document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 15, 15));
+    document.getElementById('preset-hundo').addEventListener('click', () => setSliders(15, 15, 15));
 
     function setSliders(a, d, s) {
       document.getElementById('iv-atk').value = a;
-      document.getElementById('atk-val').innerText = a;
+      document.getElementById('num-atk').value = a;
       document.getElementById('iv-def').value = d;
-      document.getElementById('def-val').innerText = d;
+      document.getElementById('num-def').value = d;
       document.getElementById('iv-sta').value = s;
-      document.getElementById('sta-val').innerText = s;
+      document.getElementById('num-sta').value = s;
       calculateRankings();
     }
 
-    // ENCONTRAR MEJOR NIVEL PARA UNA COMBINACIÓN DADA
+    // CALCULAR MEJOR NIVEL
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
       let best = { level: 1, cp: 10, product: 0, cpm: CPM_MAP[1.0] };
       const levels = Object.keys(CPM_MAP).map(Number).sort((a,b) => a - b);
 
       for (let lvl of levels) {
-        if (lvl > 50) continue; // Límite estándar nivel 50
+        if (lvl > 50) continue;
         const cpm = CPM_MAP[lvl];
         const cp = calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, cpm);
         if (cp <= maxCp) {
@@ -469,7 +610,7 @@
       return best;
     }
 
-    // CALCULAR RANKING COMPLETO (4,096 combinaciones)
+    // CALCULAR RANKINGS COMPLETOS
     function calculateRankings() {
       if (!selectedPokemon) return;
 
@@ -496,7 +637,6 @@
         }
       }
 
-      // Ordenar de mayor a menor Stat Product
       allCombos.sort((x, y) => y.product - x.product);
 
       const maxProduct = allCombos[0].product || 1;
@@ -512,18 +652,16 @@
         }
       });
 
-      // Actualizar tarjeta de resultados
       document.getElementById('res-rank').innerText = `#${userRank}`;
       document.getElementById('res-cp').innerText = userResult.cp;
       document.getElementById('res-level').innerText = `Nv. ${userResult.level}`;
       document.getElementById('res-product').innerText = Math.round(userResult.product / 1000) + 'k';
       document.getElementById('res-percent').innerText = `${userResult.percent}%`;
 
-      // Renderizar Top 10 en la tabla
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
       tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}">
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level}</td>
@@ -536,7 +674,7 @@
       lucide.createIcons();
     }
 
-    // Iniciar carga
+    // INICIALIZACIÓN
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       loadDatabase();
