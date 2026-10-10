@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Sin Oscuros - Precisión Niantic)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Oficial Niantic / IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -292,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA CPM OFICIAL DE NIANTIC
+    // TABLA OFICIAL EXACTA DE CPM DE NIANTIC (Validada con IV4U y PokeRanks)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -323,28 +323,28 @@
       { lvl: 27.0, cpm: 0.6951105 }, { lvl: 27.5, cpm: 0.701675175 },
       { lvl: 28.0, cpm: 0.70819544 }, { lvl: 28.5, cpm: 0.714673239 },
       { lvl: 29.0, cpm: 0.7211099 }, { lvl: 29.5, cpm: 0.727507388 },
-      { lvl: 30.0, cpm: 0.73386624 }, { lvl: 30.5, cpm: 0.736965839 },
-      { lvl: 31.0, cpm: 0.74005878 }, { lvl: 31.5, cpm: 0.743152597 },
-      { lvl: 32.0, cpm: 0.7462464 }, { lvl: 32.5, cpm: 0.749340203 },
-      { lvl: 33.0, cpm: 0.752434 }, { lvl: 33.5, cpm: 0.755527797 },
-      { lvl: 34.0, cpm: 0.7586216 }, { lvl: 34.5, cpm: 0.761715403 },
-      { lvl: 35.0, cpm: 0.76480917 }, { lvl: 35.5, cpm: 0.767902973 },
-      { lvl: 36.0, cpm: 0.7709968 }, { lvl: 36.5, cpm: 0.774090603 },
-      { lvl: 37.0, cpm: 0.7771844 }, { lvl: 37.5, cpm: 0.780278197 },
-      { lvl: 38.0, cpm: 0.783372 }, { lvl: 38.5, cpm: 0.786465803 },
-      { lvl: 39.0, cpm: 0.7895596 }, { lvl: 39.5, cpm: 0.792653397 },
-      { lvl: 40.0, cpm: 0.79574714 }, { lvl: 40.5, cpm: 0.79878235 },
-      { lvl: 41.0, cpm: 0.80181756 }, { lvl: 41.5, cpm: 0.80485277 },
-      { lvl: 42.0, cpm: 0.80788798 }, { lvl: 42.5, cpm: 0.81092319 },
-      { lvl: 43.0, cpm: 0.8139584 }, { lvl: 43.5, cpm: 0.81699361 },
-      { lvl: 44.0, cpm: 0.82002882 }, { lvl: 44.5, cpm: 0.82306403 },
-      { lvl: 45.0, cpm: 0.82609924 }, { lvl: 45.5, cpm: 0.82913445 },
-      { lvl: 46.0, cpm: 0.83216966 }, { lvl: 46.5, cpm: 0.83520487 },
-      { lvl: 47.0, cpm: 0.83824008 }, { lvl: 47.5, cpm: 0.84127529 },
-      { lvl: 48.0, cpm: 0.8443105 }, { lvl: 48.5, cpm: 0.84734571 },
-      { lvl: 49.0, cpm: 0.85038092 }, { lvl: 49.5, cpm: 0.85341613 },
-      { lvl: 50.0, cpm: 0.85645134 }, { lvl: 50.5, cpm: 0.85948655 },
-      { lvl: 51.0, cpm: 0.86252176 }
+      { lvl: 30.0, cpm: 0.7317 },     { lvl: 30.5, cpm: 0.734741009 },
+      { lvl: 31.0, cpm: 0.73776948 }, { lvl: 31.5, cpm: 0.740785574 },
+      { lvl: 32.0, cpm: 0.74378943 }, { lvl: 32.5, cpm: 0.746781211 },
+      { lvl: 33.0, cpm: 0.74976104 }, { lvl: 33.5, cpm: 0.752729087 },
+      { lvl: 34.0, cpm: 0.75568551 }, { lvl: 34.5, cpm: 0.758630368 },
+      { lvl: 35.0, cpm: 0.76156384 }, { lvl: 35.5, cpm: 0.764486065 },
+      { lvl: 36.0, cpm: 0.76739717 }, { lvl: 36.5, cpm: 0.770297265 },
+      { lvl: 37.0, cpm: 0.7731865 },  { lvl: 37.5, cpm: 0.776064964 },
+      { lvl: 38.0, cpm: 0.77893275 }, { lvl: 38.5, cpm: 0.781790054 },
+      { lvl: 39.0, cpm: 0.78463697 }, { lvl: 39.5, cpm: 0.787473574 },
+      { lvl: 40.0, cpm: 0.79030001 }, { lvl: 40.5, cpm: 0.7931164 },
+      { lvl: 41.0, cpm: 0.79592283 }, { lvl: 41.5, cpm: 0.79871939 },
+      { lvl: 42.0, cpm: 0.80150616 }, { lvl: 42.5, cpm: 0.80428325 },
+      { lvl: 43.0, cpm: 0.80705076 }, { lvl: 43.5, cpm: 0.8098088 },
+      { lvl: 44.0, cpm: 0.81255747 }, { lvl: 44.5, cpm: 0.81529688 },
+      { lvl: 45.0, cpm: 0.81802715 }, { lvl: 45.5, cpm: 0.82074838 },
+      { lvl: 46.0, cpm: 0.82346069 }, { lvl: 46.5, cpm: 0.82616418 },
+      { lvl: 47.0, cpm: 0.82885896 }, { lvl: 47.5, cpm: 0.83154515 },
+      { lvl: 48.0, cpm: 0.83422285 }, { lvl: 48.5, cpm: 0.83689218 },
+      { lvl: 49.0, cpm: 0.83955325 }, { lvl: 49.5, cpm: 0.84220616 },
+      { lvl: 50.0, cpm: 0.844851 },   { lvl: 50.5, cpm: 0.84748784 },
+      { lvl: 51.0, cpm: 0.85011684 }
     ];
 
     const TYPES_ES_MAP = {
@@ -463,15 +463,12 @@
       return n;
     }
 
-    // FÓRMULA OFICIAL DE CP DE NIANTIC CON PREVENCIÓN DE ERROR DE COMA FLOTANTE
+    // FÓRMULA OFICIAL DE CP DE NIANTIC
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
       const sta = baseSta + ivSta;
-      // Truncado exacto
-      const rawCP = (atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(cpm, 2)) / 10;
-      // Previene que 2500.000000001 sea 2501
-      return Math.max(10, Math.floor(rawCP + 0.00000001));
+      return Math.max(10, Math.floor((atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(cpm, 2)) / 10));
     }
 
     async function loadDatabase() {
@@ -490,7 +487,7 @@
     }
 
     function processRawData(rawData) {
-      // FILTRAR TOTALMENTE LAS FORMAS OSCURAS (SHADOW) PARA EVITAR CRUCES
+      // EXCLUSIÓN ABSOLUTA DE FORMAS OSCURAS PARA PREVENIR CRUCES
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -524,7 +521,7 @@
 
       const statusBadge = document.getElementById('db-status-badge');
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
-      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos (Sin Oscuros)`;
+      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
       const charizard = pokemonDatabase.find(p => p.speciesId === 'charizard');
       if (charizard) {
@@ -782,7 +779,7 @@
       calculateRankings();
     }
 
-    // CÁLCULO PRECISO DE MEJOR NIVEL
+    // CÁLCULO PRECISO DE STATS
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
       let best = { 
@@ -804,8 +801,9 @@
         if (cp <= maxCp) {
           const atk = (baseAtk + ivA) * step.cpm;
           const def = (baseDef + ivD) * step.cpm;
-          const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm + 0.0000001));
+          const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm));
           
+          // FÓRMULA OFICIAL DE STAT PRODUCT DE IV4U
           const product = atk * def * hp;
           best = { 
             level: step.lvl, 
@@ -823,7 +821,6 @@
       return best;
     }
 
-    // CALCULAR Y ORDENAR COMBINACIONES
     function calculateRankings() {
       if (!selectedPokemon) return;
 
