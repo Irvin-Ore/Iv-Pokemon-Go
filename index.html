@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PokeIV - Master - IV - PVP Ranks & Evoluciones</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -64,12 +62,12 @@
     </div>
   </header>
 
-  <!-- BANNER DE AVISO FILE:// -->
+  <!-- BANNER FILE:// -->
   <div id="local-cors-alert" class="hidden bg-amber-950/70 border-b border-amber-600/40 p-4 text-xs text-amber-200">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0"></i>
-        <span>Si abriste el archivo con doble clic, el navegador puede requerir seleccionar <code>pokemon.json</code> una vez.</span>
+        <span>Si abriste con doble clic, selecciona <code>pokemon.json</code> una vez para cargar.</span>
       </div>
       <label class="cursor-pointer bg-amber-600 hover:bg-amber-500 text-white font-semibold px-3 py-1.5 rounded-lg shrink-0 transition flex items-center gap-1.5 shadow">
         <i data-lucide="upload" class="w-4 h-4"></i>
@@ -79,14 +77,14 @@
     </div>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
+  <!-- MAIN -->
   <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- PANEL IZQUIERDO: CONTROLES -->
+    <!-- PANEL IZQUIERDO -->
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
-        <!-- Búsqueda con Dropdown y Miniaturas -->
+        <!-- Búsqueda -->
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
@@ -98,17 +96,17 @@
           <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto divide-y divide-slate-800"></div>
         </div>
 
-        <!-- Selector de Liga -->
+        <!-- Liga PvP -->
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
-            <button data-league="great" class="league-btn active py-2 px-2 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="great" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-blue-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Super Ball</span>
-              <span class="text-[10px] font-normal text-blue-300">1500 PC</span>
+              <span class="text-[10px] font-normal text-slate-500">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="ultra" class="league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Ultra Ball</span>
-              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
+              <span class="text-[10px] font-normal text-amber-300">2500 PC</span>
             </button>
             <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Master Ball</span>
@@ -133,7 +131,7 @@
           <div class="flex justify-between items-center">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">BUSCAR IVs</span>
             <div class="flex gap-1.5">
-              <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/15/15</button>
+              <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/13/15</button>
               <button id="preset-hundo" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">15/15/15</button>
             </div>
           </div>
@@ -171,7 +169,7 @@
 
       </div>
 
-      <!-- Tarjeta de Ataques Recomendados -->
+      <!-- Tarjeta Ataques -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
         <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
@@ -183,10 +181,8 @@
       </div>
     </div>
 
-    <!-- PANEL DERECHO: RESULTADOS Y RANKING -->
+    <!-- PANEL DERECHO: RESULTADOS -->
     <div class="lg:col-span-7 space-y-5">
-      
-      <!-- RESUMEN DEL RANKING CON IMAGEN -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
           <div class="flex items-center gap-3.5">
@@ -198,7 +194,7 @@
           </div>
           <div class="text-right shrink-0">
             <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
-            <div id="res-rank" class="text-3xl font-black text-blue-400">#--</div>
+            <div id="res-rank" class="text-3xl font-black text-amber-400">#--</div>
           </div>
         </div>
 
@@ -222,7 +218,7 @@
         </div>
       </div>
 
-      <!-- TABLA DEL TOP COMBINACIONES -->
+      <!-- TABLA TOP COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
@@ -254,7 +250,7 @@
   </main>
 
   <script>
-    // CPM OFICIALES DE NIANTIC INDEXADOS POR NIVEL EXACTO (Pasos de 0.5)
+    // MATRIZ OFICIAL CPM DE NIANTIC (1.0 a 50.0)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -342,7 +338,6 @@
       "WATER_GUN": "Pistola Agua", "BUBBLE": "Burbuja", "RAZOR_LEAF": "Hoja Afilada",
       "MAGICAL_LEAF": "Hoja Mágica", "QUICK_ATTACK": "Ataque Rápido", "TACKLE": "Placaje",
       "SCRATCH": "Arañazo", "PECK": "Picotazo", "ACID": "Ácido", "DOUBLE_KICK": "Doble Patada",
-
       "HYDRO_CANNON": "Hidrocañón", "FRENZY_PLANT": "Planta Feroz", "BLAST_BURN": "Anillo Ígneo",
       "EARTHQUAKE": "Terremoto", "ICE_BEAM": "Rayo Hielo", "SURF": "Surf",
       "BLIZZARD": "Ventisca", "WEATHER_BALL": "Meteorobola", "HYDRO_PUMP": "Hidrobomba",
@@ -367,10 +362,7 @@
       "POWER_WHIP": "Latigazo", "ICY_WIND": "Viento Hielo", "AVALANCHE": "Alud",
       "AURORA_BEAM": "Rayo Aurora", "MEGAHORN": "Megacuerno", "X_SCISSOR": "Tijera X",
       "LUNGE": "Plancha", "BUG_BUZZ": "Zumbido", "BODY_SLAM": "Golpe Cuerpo",
-      "HYPER_BEAM": "Híper Rayo", "TRI_ATTACK": "Triataque", "SKULL_BASH": "Cabezazo",
-      "ACROBATICS": "Acrobacia", "HIGH_HORSEPOWER": "Fuerza Equina", "LIQUIDATION": "Hidroariete",
-      "SHADOW_BONE": "Hueso Sombrío", "BRUTAL_SWING": "Giro Vil", "TRAILBLAZE": "Abrecaminos",
-      "DRAGON_BREATH": "Dragoaliento"
+      "HYPER_BEAM": "Híper Rayo", "TRI_ATTACK": "Triataque", "SKULL_BASH": "Cabezazo"
     };
 
     function translateMove(moveStr) {
@@ -382,7 +374,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'ultra'; // Por defecto iniciamos con ultra para validar Charizard
+    let selectedLeague = 'ultra';
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -399,62 +391,34 @@
       if (!name) return '-';
       let n = name;
 
-      if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) {
-        return 'Zacian (Guerrero Avezado)';
-      }
-      if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) {
-        return 'Zacian (Espada Suprema)';
-      }
-      if (/crowned_shield/i.test(speciesId) || /crowned shield/i.test(n)) {
-        return 'Zamazenta (Escudo Supremo)';
-      }
+      if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) return 'Zacian (Guerrero Avezado)';
+      if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) return 'Zacian (Espada Suprema)';
+      if (/crowned_shield/i.test(speciesId) || /crowned shield/i.test(n)) return 'Zamazenta (Escudo Supremo)';
 
       if (n.toLowerCase().startsWith('arceus')) {
-        n = n.replace(/\(Ground\)/i, '(Tierra)')
-             .replace(/\(Fire\)/i, '(Fuego)')
-             .replace(/\(Water\)/i, '(Agua)')
-             .replace(/\(Grass\)/i, '(Planta)')
-             .replace(/\(Electric\)/i, '(Eléctrico)')
-             .replace(/\(Ice\)/i, '(Hielo)')
-             .replace(/\(Fighting\)/i, '(Lucha)')
-             .replace(/\(Poison\)/i, '(Veneno)')
-             .replace(/\(Flying\)/i, '(Volador)')
-             .replace(/\(Psychic\)/i, '(Psíquico)')
-             .replace(/\(Bug\)/i, '(Bicho)')
-             .replace(/\(Rock\)/i, '(Roca)')
-             .replace(/\(Ghost\)/i, '(Fantasma)')
-             .replace(/\(Dragon\)/i, '(Dragón)')
-             .replace(/\(Steel\)/i, '(Acero)')
-             .replace(/\(Dark\)/i, '(Siniestro)')
-             .replace(/\(Fairy\)/i, '(Hada)');
+        n = n.replace(/\(Ground\)/i, '(Tierra)').replace(/\(Fire\)/i, '(Fuego)')
+             .replace(/\(Water\)/i, '(Agua)').replace(/\(Grass\)/i, '(Planta)')
+             .replace(/\(Electric\)/i, '(Eléctrico)').replace(/\(Ice\)/i, '(Hielo)')
+             .replace(/\(Fighting\)/i, '(Lucha)').replace(/\(Poison\)/i, '(Veneno)')
+             .replace(/\(Flying\)/i, '(Volador)').replace(/\(Psychic\)/i, '(Psíquico)')
+             .replace(/\(Bug\)/i, '(Bicho)').replace(/\(Rock\)/i, '(Roca)')
+             .replace(/\(Ghost\)/i, '(Fantasma)').replace(/\(Dragon\)/i, '(Dragón)')
+             .replace(/\(Steel\)/i, '(Acero)').replace(/\(Dark\)/i, '(Siniestro)').replace(/\(Fairy\)/i, '(Hada)');
       }
 
-      if (/\(Shadow\)/i.test(n)) {
-        n = n.replace(/\(Shadow\)/i, '').trim() + ' oscuro';
-      } else if (n.toLowerCase().endsWith('_shadow')) {
-        n = n.replace(/_shadow/i, '').trim() + ' oscuro';
-      }
+      if (/\(Shadow\)/i.test(n)) n = n.replace(/\(Shadow\)/i, '').trim() + ' oscuro';
+      else if (n.toLowerCase().endsWith('_shadow')) n = n.replace(/_shadow/i, '').trim() + ' oscuro';
 
-      if (/\(Primal\)/i.test(n)) {
-        n = n.replace(/\(Primal\)/i, '').trim() + ' primigenio';
-      } else if (n.toLowerCase().startsWith('primal ')) {
-        n = n.replace(/primal\s+/i, '').trim() + ' primigenio';
-      }
+      if (/\(Primal\)/i.test(n)) n = n.replace(/\(Primal\)/i, '').trim() + ' primigenio';
+      else if (n.toLowerCase().startsWith('primal ')) n = n.replace(/primal\s+/i, '').trim() + ' primigenio';
 
-      if (/\(Mega\s*X\)/i.test(n)) {
-        n = `Mega ${n.replace(/\(Mega\s*X\)/i, '').trim()} X`;
-      } else if (/\(Mega\s*Y\)/i.test(n)) {
-        n = `Mega ${n.replace(/\(Mega\s*Y\)/i, '').trim()} Y`;
-      } else if (/\(Mega\)/i.test(n)) {
-        n = `Mega ${n.replace(/\(Mega\)/i, '').trim()}`;
-      } else if (n.toLowerCase().endsWith(' mega')) {
-        n = `Mega ${n.slice(0, -5).trim()}`;
-      }
+      if (/\(Mega\s*X\)/i.test(n)) n = `Mega ${n.replace(/\(Mega\s*X\)/i, '').trim()} X`;
+      else if (/\(Mega\s*Y\)/i.test(n)) n = `Mega ${n.replace(/\(Mega\s*Y\)/i, '').trim()} Y`;
+      else if (/\(Mega\)/i.test(n)) n = `Mega ${n.replace(/\(Mega\)/i, '').trim()}`;
+      else if (n.toLowerCase().endsWith(' mega')) n = `Mega ${n.slice(0, -5).trim()}`;
 
-      n = n.replace(/\(Alolan\)/i, '(Alola)')
-           .replace(/\(Galarian\)/i, '(Galar)')
-           .replace(/\(Hisuian\)/i, '(Hisui)')
-           .replace(/\(Paldean\)/i, '(Paldea)');
+      n = n.replace(/\(Alolan\)/i, '(Alola)').replace(/\(Galarian\)/i, '(Galar)')
+           .replace(/\(Hisuian\)/i, '(Hisui)').replace(/\(Paldean\)/i, '(Paldea)');
 
       return n;
     }
@@ -488,6 +452,11 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
+        // CORRECCIÓN CRÍTICA: PvPoke usa .hp o .sta indistintamente
+        const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
+        const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
+        const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
+
         return {
           dex: p.dex || 0,
           speciesId: p.speciesId,
@@ -495,9 +464,9 @@
           family: p.family ? (p.family.id || p.family) : null,
           types: p.types || [],
           baseStats: {
-            atk: p.baseStats ? p.baseStats.atk : 100,
-            def: p.baseStats ? p.baseStats.def : 100,
-            sta: p.baseStats ? p.baseStats.hp : 100
+            atk: atkVal,
+            def: defVal,
+            sta: staVal
           },
           fastMoves: p.fastMoves || [],
           chargedMoves: p.chargedMoves || [],
@@ -509,7 +478,6 @@
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
       statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
-      // Seleccionar Charizard base por defecto si existe
       const charizard = pokemonDatabase.find(p => p.speciesId === 'charizard');
       if (charizard) {
         selectPokemon('charizard');
@@ -750,7 +718,7 @@
       });
     });
 
-    document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 15, 15));
+    document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 13, 15));
     document.getElementById('preset-hundo').addEventListener('click', () => setSliders(15, 15, 15));
 
     function setSliders(a, d, s) {
@@ -763,7 +731,7 @@
       calculateRankings();
     }
 
-    // CÁLCULO PRECISO Y RIGUROSO DEL NIVEL MÁXIMO POSIBLE POR DEBAJO DEL LÍMITE DE PC
+    // CÁLCULO OFICIAL ESTÁNDAR DE IV4U Y PVPOKE
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
       let best = { level: 1.0, cp: 10, product: 0, cpm: CPM_STEPS[0].cpm };
 
@@ -774,17 +742,17 @@
         if (cp <= maxCp) {
           const atk = (baseAtk + ivA) * step.cpm;
           const def = (baseDef + ivD) * step.cpm;
-          const hp = Math.floor((baseSta + ivS) * step.cpm); // Floor estricto de PS oficial
+          const hp = Math.floor((baseSta + ivS) * step.cpm);
+          // Fórmula oficial de Stat Product
           const product = atk * def * hp;
           best = { level: step.lvl, cp, product, cpm: step.cpm };
         } else {
-          break; // Superó el límite de la liga
+          break;
         }
       }
       return best;
     }
 
-    // CALCULAR Y ORDENAR LAS 4096 COMBINACIONES
     function calculateRankings() {
       if (!selectedPokemon) return;
 
@@ -811,7 +779,6 @@
         }
       }
 
-      // Orden descendente por Stat Product exacto
       allCombos.sort((x, y) => y.product - x.product);
 
       const maxProduct = allCombos[0].product || 1;
@@ -840,7 +807,7 @@
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
       tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-amber-500/10 text-amber-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
