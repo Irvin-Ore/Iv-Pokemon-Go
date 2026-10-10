@@ -39,7 +39,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
 
-  <!-- NAVBAR -->
   <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -50,7 +49,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Ranking Oficial 100% IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Oficial 100% IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -62,7 +61,6 @@
     </div>
   </header>
 
-  <!-- BANNER LOCAL FILE:// -->
   <div id="local-cors-alert" class="hidden bg-amber-950/70 border-b border-amber-600/40 p-4 text-xs text-amber-200">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
@@ -77,26 +75,21 @@
     </div>
   </div>
 
-  <!-- MAIN -->
   <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- PANEL IZQUIERDO -->
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
-        <!-- Búsqueda con Dropdown y Miniaturas -->
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Snorlax, Grimmsnarl, Swampert...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Snorlax, Swampert...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
-
           <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto divide-y divide-slate-800"></div>
         </div>
 
-        <!-- Selector de Liga -->
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
@@ -115,7 +108,6 @@
           </div>
         </div>
 
-        <!-- OPCIONES AVANZADAS DE AMISTAD -->
         <div class="pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div class="flex items-center justify-between bg-slate-950 border border-slate-800 p-2.5 rounded-xl">
             <div class="flex items-center gap-2">
@@ -142,7 +134,6 @@
           </div>
         </div>
 
-        <!-- Cadena Evolutiva -->
         <div class="pt-3 border-t border-slate-800/80 space-y-2">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
             <i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -153,7 +144,6 @@
           </div>
         </div>
 
-        <!-- BUSCAR IVs -->
         <div class="pt-3 border-t border-slate-800/80 space-y-4">
           <div class="flex justify-between items-center">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">BUSCAR IVs</span>
@@ -163,7 +153,6 @@
             </div>
           </div>
 
-          <!-- Ataque -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-red-400">Ataque</span>
@@ -173,7 +162,6 @@
             <input type="range" id="iv-atk" min="0" max="15" value="1" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
-          <!-- Defensa -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
@@ -183,7 +171,6 @@
             <input type="range" id="iv-def" min="0" max="15" value="14" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
-          <!-- PS -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-emerald-400">PS</span>
@@ -196,7 +183,6 @@
 
       </div>
 
-      <!-- Tarjeta Ataques -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
         <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
@@ -208,7 +194,6 @@
       </div>
     </div>
 
-    <!-- PANEL DERECHO: RESULTADOS -->
     <div class="lg:col-span-7 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
@@ -260,7 +245,6 @@
         </div>
       </div>
 
-      <!-- TABLA TOP COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
@@ -292,7 +276,7 @@
   </main>
 
   <script>
-    // TABLA EXACTA DE CPM OFICIAL DEL GAMEMASTER
+    // MATRIZ OFICIAL DE CPM
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.0940000000 }, { lvl: 1.5, cpm: 0.1351374322 },
       { lvl: 2.0, cpm: 0.1663978700 }, { lvl: 2.5, cpm: 0.1926509145 },
@@ -784,17 +768,10 @@
       calculateRankings();
     }
 
+    // CÁLCULO PRECISO DE STATS
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
-      let best = { 
-        level: 1.0, 
-        cp: 10, 
-        product: 0, 
-        cpm: CPM_STEPS[0].cpm,
-        realAtk: 0,
-        realDef: 0,
-        realHp: 10
-      };
+      let best = null;
 
       for (let i = 0; i < CPM_STEPS.length; i++) {
         const step = CPM_STEPS[i];
@@ -806,8 +783,8 @@
           const atk = (baseAtk + ivA) * step.cpm;
           const def = (baseDef + ivD) * step.cpm;
           const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm));
-          
           const product = atk * def * hp;
+
           best = { 
             level: step.lvl, 
             cp: cp, 
@@ -820,6 +797,22 @@
         } else {
           break;
         }
+      }
+
+      if (!best) {
+        const first = CPM_STEPS[0];
+        const atk = (baseAtk + ivA) * first.cpm;
+        const def = (baseDef + ivD) * first.cpm;
+        const hp = Math.max(10, Math.floor((baseSta + ivS) * first.cpm));
+        best = {
+          level: 1.0,
+          cp: calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, first.cpm),
+          product: atk * def * hp,
+          cpm: first.cpm,
+          realAtk: atk,
+          realDef: def,
+          realHp: hp
+        };
       }
       return best;
     }
@@ -855,7 +848,7 @@
         }
       }
 
-      // ORDENACIÓN EXACTA CON DESEMPATE POR CP MÁS ALTO
+      // ORDENACIÓN EXACTA CON DESEMPATE POR CP MÁS ALTO (COMO IV4U)
       allCombos.sort((x, y) => {
         const diff = y.product - x.product;
         if (Math.abs(diff) > 0.0001) return diff;
@@ -868,18 +861,16 @@
       let userRank = '-';
       let userResult = null;
 
-      // SISTEMA DE RANGOS ESTÁNDAR CON SALTOS POR EMPATE (STANDARD COMPETITION RANKING)
+      // CLASIFICACIÓN ESTÁNDAR DE COMPETICIÓN (1224) IDÉNTICA A IV4U
       allCombos.forEach((item, index) => {
         if (index === 0) {
           item.rank = 1;
         } else {
           const prev = allCombos[index - 1];
-          // Si el Stat Product es idéntico, comparte el mismo rango
           if (Math.abs(prev.product - item.product) <= 0.0001) {
             item.rank = prev.rank;
           } else {
-            // Salta al número de posición real (como en IV4U)
-            item.rank = index + 1;
+            item.rank = index + 1; // Salto correcto por empate
           }
         }
 
@@ -913,10 +904,8 @@
 
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
-      tbody.innerHTML = top10.map(item => {
-        const rowColor = selectedLeague === 'great' ? 'bg-blue-500/10 text-blue-300' : (selectedLeague === 'ultra' ? 'bg-amber-500/10 text-amber-300' : 'bg-purple-500/10 text-purple-300');
-        return `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? rowColor + ' font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+      tbody.innerHTML = top10.map(item => `
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-amber-500/10 text-amber-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
@@ -924,7 +913,7 @@
           <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
           <td class="p-2.5 text-cyan-400">${item.percent}%</td>
         </tr>
-      `}).join('');
+      `).join('');
 
       lucide.createIcons();
     }
