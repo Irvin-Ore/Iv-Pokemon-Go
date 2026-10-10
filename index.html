@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(CPM Exacto Niantic 0.5)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Niantic GameMaster)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -88,7 +88,7 @@
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Swampert, Charizard...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Snorlax, Grimmsnarl, Swampert...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
@@ -100,13 +100,13 @@
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
-            <button data-league="great" class="league-btn active py-2 px-2 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="great" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-blue-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Super Ball</span>
-              <span class="text-[10px] font-normal text-blue-300">1500 PC</span>
+              <span class="text-[10px] font-normal text-slate-500">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="ultra" class="league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Ultra Ball</span>
-              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
+              <span class="text-[10px] font-normal text-amber-300">2500 PC</span>
             </button>
             <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Master Ball</span>
@@ -167,30 +167,30 @@
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-red-400">Ataque</span>
-              <input type="number" id="num-atk" min="0" max="15" value="0"
+              <input type="number" id="num-atk" min="0" max="15" value="1"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-red-400 py-1 focus:outline-none focus:border-red-500">
             </div>
-            <input type="range" id="iv-atk" min="0" max="15" value="0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-atk" min="0" max="15" value="1" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- Defensa -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
-              <input type="number" id="num-def" min="0" max="15" value="15"
+              <input type="number" id="num-def" min="0" max="15" value="14"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
-            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-def" min="0" max="15" value="14" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- PS -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-emerald-400">PS</span>
-              <input type="number" id="num-sta" min="0" max="15" value="15"
+              <input type="number" id="num-sta" min="0" max="15" value="8"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-emerald-400 py-1 focus:outline-none focus:border-emerald-500">
             </div>
-            <input type="range" id="iv-sta" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-sta" min="0" max="15" value="8" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
         </div>
 
@@ -221,7 +221,7 @@
           </div>
           <div class="text-right shrink-0">
             <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
-            <div id="res-rank" class="text-3xl font-black text-blue-400">#--</div>
+            <div id="res-rank" class="text-3xl font-black text-amber-400">#--</div>
           </div>
         </div>
 
@@ -292,108 +292,58 @@
   </main>
 
   <script>
-    // TABLA OFICIAL EXACTA NIANTIC GAMEMASTER (Calculada con la raíz cuadrática media oficial para cada .5)
+    // TABLA EXACTA DE CPM OFICIAL DEL GAMEMASTER (Calculada con la raíz cuadrática media oficial para cada .5)
     const CPM_STEPS = [
-      { lvl: 1.0, cpm: 0.0940000000 },
-      { lvl: 1.5, cpm: 0.1351374322 },
-      { lvl: 2.0, cpm: 0.1663978700 },
-      { lvl: 2.5, cpm: 0.1926509145 },
-      { lvl: 3.0, cpm: 0.2157324700 },
-      { lvl: 3.5, cpm: 0.2365726554 },
-      { lvl: 4.0, cpm: 0.2557200500 },
-      { lvl: 4.5, cpm: 0.2735303793 },
-      { lvl: 5.0, cpm: 0.2902498800 },
-      { lvl: 5.5, cpm: 0.3060573800 },
-      { lvl: 6.0, cpm: 0.3210876000 },
-      { lvl: 6.5, cpm: 0.3354450259 },
-      { lvl: 7.0, cpm: 0.3492126800 },
-      { lvl: 7.5, cpm: 0.3624577531 },
-      { lvl: 8.0, cpm: 0.3752355900 },
-      { lvl: 8.5, cpm: 0.3875924046 },
-      { lvl: 9.0, cpm: 0.3995672800 },
-      { lvl: 9.5, cpm: 0.4111935446 },
-      { lvl: 10.0, cpm: 0.4225000100 },
-      { lvl: 10.5, cpm: 0.4329264149 },
-      { lvl: 11.0, cpm: 0.4431075500 },
-      { lvl: 11.5, cpm: 0.4530599544 },
-      { lvl: 12.0, cpm: 0.4627983900 },
-      { lvl: 12.5, cpm: 0.4723360877 },
-      { lvl: 13.0, cpm: 0.4816849500 },
-      { lvl: 13.5, cpm: 0.4908557997 },
-      { lvl: 14.0, cpm: 0.4998584400 },
-      { lvl: 14.5, cpm: 0.5087017604 },
-      { lvl: 15.0, cpm: 0.5173939500 },
-      { lvl: 15.5, cpm: 0.5259425088 },
-      { lvl: 16.0, cpm: 0.5343543300 },
-      { lvl: 16.5, cpm: 0.5426357632 },
-      { lvl: 17.0, cpm: 0.5507926900 },
-      { lvl: 17.5, cpm: 0.5588305688 },
-      { lvl: 18.0, cpm: 0.5667545200 },
-      { lvl: 18.5, cpm: 0.5745691456 },
-      { lvl: 19.0, cpm: 0.5822789100 },
-      { lvl: 19.5, cpm: 0.5898879124 },
-      { lvl: 20.0, cpm: 0.5974000100 },
-      { lvl: 20.5, cpm: 0.6048236528 },
-      { lvl: 21.0, cpm: 0.6121572900 },
-      { lvl: 21.5, cpm: 0.6194091012 },
-      { lvl: 22.0, cpm: 0.6266071200 },
-      { lvl: 22.5, cpm: 0.6337258487 },
-      { lvl: 23.0, cpm: 0.6407760000 },
-      { lvl: 23.5, cpm: 0.6477703447 },
-      { lvl: 24.0, cpm: 0.6546899700 },
-      { lvl: 24.5, cpm: 0.6613451388 },
-      { lvl: 25.0, cpm: 0.6679340000 },
-      { lvl: 25.5, cpm: 0.6745818989 },
-      { lvl: 26.0, cpm: 0.6811649200 },
-      { lvl: 26.5, cpm: 0.6876849043 },
-      { lvl: 27.0, cpm: 0.6941436500 },
-      { lvl: 27.5, cpm: 0.7005651088 },
-      { lvl: 28.0, cpm: 0.7069282400 },
-      { lvl: 28.5, cpm: 0.7132800318 },
-      { lvl: 29.0, cpm: 0.7195764400 },
-      { lvl: 29.5, cpm: 0.7256635388 },
-      { lvl: 30.0, cpm: 0.7317000000 },
-      { lvl: 30.5, cpm: 0.7347410090 },
-      { lvl: 31.0, cpm: 0.7377694800 },
-      { lvl: 31.5, cpm: 0.7407855740 },
-      { lvl: 32.0, cpm: 0.7437894300 },
-      { lvl: 32.5, cpm: 0.7467812110 },
-      { lvl: 33.0, cpm: 0.7497610400 },
-      { lvl: 33.5, cpm: 0.7527290870 },
-      { lvl: 34.0, cpm: 0.7556855100 },
-      { lvl: 34.5, cpm: 0.7586303686 },
-      { lvl: 35.0, cpm: 0.7615638400 },
-      { lvl: 35.5, cpm: 0.7644860650 },
-      { lvl: 36.0, cpm: 0.7673971700 },
-      { lvl: 36.5, cpm: 0.7702972650 },
-      { lvl: 37.0, cpm: 0.7731865000 },
-      { lvl: 37.5, cpm: 0.7760649640 },
-      { lvl: 38.0, cpm: 0.7789327500 },
-      { lvl: 38.5, cpm: 0.7817900540 },
-      { lvl: 39.0, cpm: 0.7846369700 },
-      { lvl: 39.5, cpm: 0.7874735740 },
-      { lvl: 40.0, cpm: 0.7903000100 },
-      { lvl: 40.5, cpm: 0.7928000100 },
-      { lvl: 41.0, cpm: 0.7953000100 },
-      { lvl: 41.5, cpm: 0.7978000100 },
-      { lvl: 42.0, cpm: 0.8003000100 },
-      { lvl: 42.5, cpm: 0.8028000100 },
-      { lvl: 43.0, cpm: 0.8053000100 },
-      { lvl: 43.5, cpm: 0.8078000100 },
-      { lvl: 44.0, cpm: 0.8103000100 },
-      { lvl: 44.5, cpm: 0.8128000100 },
-      { lvl: 45.0, cpm: 0.8153000100 },
-      { lvl: 45.5, cpm: 0.8178000100 },
-      { lvl: 46.0, cpm: 0.8203000100 },
-      { lvl: 46.5, cpm: 0.8228000100 },
-      { lvl: 47.0, cpm: 0.8253000100 },
-      { lvl: 47.5, cpm: 0.8278000100 },
-      { lvl: 48.0, cpm: 0.8303000100 },
-      { lvl: 48.5, cpm: 0.8328000100 },
-      { lvl: 49.0, cpm: 0.8353000100 },
-      { lvl: 49.5, cpm: 0.8378000100 },
-      { lvl: 50.0, cpm: 0.8403000100 },
-      { lvl: 50.5, cpm: 0.8428000100 },
+      { lvl: 1.0, cpm: 0.0940000000 }, { lvl: 1.5, cpm: 0.1351374322 },
+      { lvl: 2.0, cpm: 0.1663978700 }, { lvl: 2.5, cpm: 0.1926509145 },
+      { lvl: 3.0, cpm: 0.2157324700 }, { lvl: 3.5, cpm: 0.2365726554 },
+      { lvl: 4.0, cpm: 0.2557200500 }, { lvl: 4.5, cpm: 0.2735303793 },
+      { lvl: 5.0, cpm: 0.2902498800 }, { lvl: 5.5, cpm: 0.3060573800 },
+      { lvl: 6.0, cpm: 0.3210876000 }, { lvl: 6.5, cpm: 0.3354450259 },
+      { lvl: 7.0, cpm: 0.3492126800 }, { lvl: 7.5, cpm: 0.3624577531 },
+      { lvl: 8.0, cpm: 0.3752355900 }, { lvl: 8.5, cpm: 0.3875924046 },
+      { lvl: 9.0, cpm: 0.3995672800 }, { lvl: 9.5, cpm: 0.4111935446 },
+      { lvl: 10.0, cpm: 0.4225000100 }, { lvl: 10.5, cpm: 0.4329264149 },
+      { lvl: 11.0, cpm: 0.4431075500 }, { lvl: 11.5, cpm: 0.4530599544 },
+      { lvl: 12.0, cpm: 0.4627983900 }, { lvl: 12.5, cpm: 0.4723360877 },
+      { lvl: 13.0, cpm: 0.4816849500 }, { lvl: 13.5, cpm: 0.4908557997 },
+      { lvl: 14.0, cpm: 0.4998584400 }, { lvl: 14.5, cpm: 0.5087017604 },
+      { lvl: 15.0, cpm: 0.5173939500 }, { lvl: 15.5, cpm: 0.5259425088 },
+      { lvl: 16.0, cpm: 0.5343543300 }, { lvl: 16.5, cpm: 0.5426357632 },
+      { lvl: 17.0, cpm: 0.5507926900 }, { lvl: 17.5, cpm: 0.5588305688 },
+      { lvl: 18.0, cpm: 0.5667545200 }, { lvl: 18.5, cpm: 0.5745691456 },
+      { lvl: 19.0, cpm: 0.5822789100 }, { lvl: 19.5, cpm: 0.5898879124 },
+      { lvl: 20.0, cpm: 0.5974000100 }, { lvl: 20.5, cpm: 0.6048236528 },
+      { lvl: 21.0, cpm: 0.6121572900 }, { lvl: 21.5, cpm: 0.6194091012 },
+      { lvl: 22.0, cpm: 0.6266071200 }, { lvl: 22.5, cpm: 0.6337258487 },
+      { lvl: 23.0, cpm: 0.6407760000 }, { lvl: 23.5, cpm: 0.6477703447 },
+      { lvl: 24.0, cpm: 0.6546899700 }, { lvl: 24.5, cpm: 0.6613451388 },
+      { lvl: 25.0, cpm: 0.6679340000 }, { lvl: 25.5, cpm: 0.6745818989 },
+      { lvl: 26.0, cpm: 0.6811649200 }, { lvl: 26.5, cpm: 0.6876849043 },
+      { lvl: 27.0, cpm: 0.6941436500 }, { lvl: 27.5, cpm: 0.7005651088 },
+      { lvl: 28.0, cpm: 0.7069282400 }, { lvl: 28.5, cpm: 0.7132800318 },
+      { lvl: 29.0, cpm: 0.7195764400 }, { lvl: 29.5, cpm: 0.7255756239 },
+      { lvl: 30.0, cpm: 0.7317000000 }, { lvl: 30.5, cpm: 0.7347410090 },
+      { lvl: 31.0, cpm: 0.7377694800 }, { lvl: 31.5, cpm: 0.7407855740 },
+      { lvl: 32.0, cpm: 0.7437894300 }, { lvl: 32.5, cpm: 0.7467812110 },
+      { lvl: 33.0, cpm: 0.7497610400 }, { lvl: 33.5, cpm: 0.7527290870 },
+      { lvl: 34.0, cpm: 0.7556855100 }, { lvl: 34.5, cpm: 0.7586303686 },
+      { lvl: 35.0, cpm: 0.7615638400 }, { lvl: 35.5, cpm: 0.7644860650 },
+      { lvl: 36.0, cpm: 0.7673971700 }, { lvl: 36.5, cpm: 0.7702972650 },
+      { lvl: 37.0, cpm: 0.7731865000 }, { lvl: 37.5, cpm: 0.7760649640 },
+      { lvl: 38.0, cpm: 0.7789327500 }, { lvl: 38.5, cpm: 0.7817900540 },
+      { lvl: 39.0, cpm: 0.7846369700 }, { lvl: 39.5, cpm: 0.7874735740 },
+      { lvl: 40.0, cpm: 0.7903000100 }, { lvl: 40.5, cpm: 0.7928000100 },
+      { lvl: 41.0, cpm: 0.7953000100 }, { lvl: 41.5, cpm: 0.7978000100 },
+      { lvl: 42.0, cpm: 0.8003000100 }, { lvl: 42.5, cpm: 0.8028000100 },
+      { lvl: 43.0, cpm: 0.8053000100 }, { lvl: 43.5, cpm: 0.8078000100 },
+      { lvl: 44.0, cpm: 0.8103000100 }, { lvl: 44.5, cpm: 0.8128000100 },
+      { lvl: 45.0, cpm: 0.8153000100 }, { lvl: 45.5, cpm: 0.8178000100 },
+      { lvl: 46.0, cpm: 0.8203000100 }, { lvl: 46.5, cpm: 0.8228000100 },
+      { lvl: 47.0, cpm: 0.8253000100 }, { lvl: 47.5, cpm: 0.8278000100 },
+      { lvl: 48.0, cpm: 0.8303000100 }, { lvl: 48.5, cpm: 0.8328000100 },
+      { lvl: 49.0, cpm: 0.8353000100 }, { lvl: 49.5, cpm: 0.8378000100 },
+      { lvl: 50.0, cpm: 0.8403000100 }, { lvl: 50.5, cpm: 0.8428000100 },
       { lvl: 51.0, cpm: 0.8453000100 }
     ];
 
@@ -467,7 +417,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'great';
+    let selectedLeague = 'ultra';
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -517,7 +467,6 @@
       return n;
     }
 
-    // FÓRMULA OFICIAL DE CP DE NIANTIC
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
@@ -541,7 +490,6 @@
     }
 
     function processRawData(rawData) {
-      // Excluir formas oscuras
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -584,7 +532,10 @@
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
       statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
-      if (pokemonDatabase.length > 0) {
+      const snorlax = pokemonDatabase.find(p => p.speciesId === 'snorlax');
+      if (snorlax) {
+        selectPokemon('snorlax');
+      } else if (pokemonDatabase.length > 0) {
         selectPokemon(pokemonDatabase[0].speciesId);
       }
     }
@@ -905,7 +856,12 @@
         }
       }
 
-      allCombos.sort((x, y) => y.product - x.product);
+      // ORDENACIÓN EXACTA CON DESEMPATE POR CP MÁS ALTO (COMO IV4U)
+      allCombos.sort((x, y) => {
+        const diff = y.product - x.product;
+        if (Math.abs(diff) > 0.0001) return diff;
+        return y.cp - x.cp; // Desempate por CP
+      });
 
       document.getElementById('combos-count-label').innerText = `De ${allCombos.length.toLocaleString()} combinaciones`;
 
@@ -913,9 +869,19 @@
       let userRank = '-';
       let userResult = null;
 
+      // ASIGNACIÓN DE RANGOS CON SOPORTE PARA EMPATES
+      let currentAssignedRank = 1;
       allCombos.forEach((item, index) => {
-        item.rank = index + 1;
+        if (index > 0) {
+          const prev = allCombos[index - 1];
+          // Si el Stat Product es idéntico, comparten el mismo rango
+          if (Math.abs(prev.product - item.product) > 0.0001) {
+            currentAssignedRank = index + 1;
+          }
+        }
+        item.rank = currentAssignedRank;
         item.percent = ((item.product / maxProduct) * 100).toFixed(2);
+
         if (item.a === currentA && item.d === currentD && item.s === currentS) {
           userRank = item.rank;
           userResult = item;
@@ -944,10 +910,8 @@
 
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
-      tbody.innerHTML = top10.map(item => {
-        const rowColor = selectedLeague === 'great' ? 'bg-blue-500/10 text-blue-300' : (selectedLeague === 'ultra' ? 'bg-amber-500/10 text-amber-300' : 'bg-purple-500/10 text-purple-300');
-        return `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? rowColor + ' font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+      tbody.innerHTML = top10.map(item => `
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-amber-500/10 text-amber-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
@@ -955,7 +919,7 @@
           <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
           <td class="p-2.5 text-cyan-400">${item.percent}%</td>
         </tr>
-      `}).join('');
+      `).join('');
 
       lucide.createIcons();
     }
