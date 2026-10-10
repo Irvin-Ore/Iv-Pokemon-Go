@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Universal Calibrado)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(CPM Exacto Niantic 0.5)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -88,7 +88,7 @@
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Swampert, Medicham, Charizard...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Swampert, Charizard...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
@@ -292,59 +292,109 @@
   </main>
 
   <script>
-    // TABLA CPM COMPLETA (Nivel 1.0 a 51.0 en incrementos de 0.5 para TODOS los Pokémon)
+    // TABLA OFICIAL EXACTA NIANTIC GAMEMASTER (Calculada con la raíz cuadrática media oficial para cada .5)
     const CPM_STEPS = [
-      { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
-      { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
-      { lvl: 3.0, cpm: 0.21573247 }, { lvl: 3.5, cpm: 0.236572661 },
-      { lvl: 4.0, cpm: 0.25572005 }, { lvl: 4.5, cpm: 0.273530381 },
-      { lvl: 5.0, cpm: 0.29024988 }, { lvl: 5.5, cpm: 0.306057377 },
-      { lvl: 6.0, cpm: 0.3210876 }, { lvl: 6.5, cpm: 0.335445036 },
-      { lvl: 7.0, cpm: 0.34921268 }, { lvl: 7.5, cpm: 0.362457751 },
-      { lvl: 8.0, cpm: 0.37523559 }, { lvl: 8.5, cpm: 0.387592406 },
-      { lvl: 9.0, cpm: 0.39956728 }, { lvl: 9.5, cpm: 0.411193551 },
-      { lvl: 10.0, cpm: 0.42250001 }, { lvl: 10.5, cpm: 0.432926419 },
-      { lvl: 11.0, cpm: 0.44310755 }, { lvl: 11.5, cpm: 0.453059958 },
-      { lvl: 12.0, cpm: 0.46279839 }, { lvl: 12.5, cpm: 0.472336083 },
-      { lvl: 13.0, cpm: 0.48168495 }, { lvl: 13.5, cpm: 0.4908558 },
-      { lvl: 14.0, cpm: 0.49985844 }, { lvl: 14.5, cpm: 0.508701765 },
-      { lvl: 15.0, cpm: 0.51739395 }, { lvl: 15.5, cpm: 0.525942511 },
-      { lvl: 16.0, cpm: 0.53435433 }, { lvl: 16.5, cpm: 0.542635767 },
-      { lvl: 17.0, cpm: 0.55079269 }, { lvl: 17.5, cpm: 0.558830576 },
-      { lvl: 18.0, cpm: 0.56675452 }, { lvl: 18.5, cpm: 0.574569153 },
-      { lvl: 19.0, cpm: 0.58227891 }, { lvl: 19.5, cpm: 0.589887917 },
-      { lvl: 20.0, cpm: 0.59740001 }, { lvl: 20.5, cpm: 0.604818814 },
-      { lvl: 21.0, cpm: 0.61215729 }, { lvl: 21.5, cpm: 0.619418992 },
-      { lvl: 22.0, cpm: 0.62660712 }, { lvl: 22.5, cpm: 0.633724976 },
-      { lvl: 23.0, cpm: 0.640776 }, { lvl: 23.5, cpm: 0.647763197 },
-      { lvl: 24.0, cpm: 0.65468997 }, { lvl: 24.5, cpm: 0.66155949 },
-      { lvl: 25.0, cpm: 0.66837322 }, { lvl: 25.5, cpm: 0.675133489 },
-      { lvl: 26.0, cpm: 0.68184144 }, { lvl: 26.5, cpm: 0.688499969 },
-      { lvl: 27.0, cpm: 0.6951105 }, { lvl: 27.5, cpm: 0.701675175 },
-      { lvl: 28.0, cpm: 0.70819544 }, { lvl: 28.5, cpm: 0.714673239 },
-      { lvl: 29.0, cpm: 0.7211099 }, { lvl: 29.5, cpm: 0.727507388 },
-      { lvl: 30.0, cpm: 0.7317 },     { lvl: 30.5, cpm: 0.734741009 },
-      { lvl: 31.0, cpm: 0.73776948 }, { lvl: 31.5, cpm: 0.740785574 },
-      { lvl: 32.0, cpm: 0.74378943 }, { lvl: 32.5, cpm: 0.746781211 },
-      { lvl: 33.0, cpm: 0.74976104 }, { lvl: 33.5, cpm: 0.752729087 },
-      { lvl: 34.0, cpm: 0.75568551 }, { lvl: 34.5, cpm: 0.758630368 },
-      { lvl: 35.0, cpm: 0.76156384 }, { lvl: 35.5, cpm: 0.764486065 },
-      { lvl: 36.0, cpm: 0.76739717 }, { lvl: 36.5, cpm: 0.770297265 },
-      { lvl: 37.0, cpm: 0.7731865 },  { lvl: 37.5, cpm: 0.776064964 },
-      { lvl: 38.0, cpm: 0.77893275 }, { lvl: 38.5, cpm: 0.781790054 },
-      { lvl: 39.0, cpm: 0.78463697 }, { lvl: 39.5, cpm: 0.787473574 },
-      { lvl: 40.0, cpm: 0.790300 },   { lvl: 40.5, cpm: 0.792800 },
-      { lvl: 41.0, cpm: 0.795300 },   { lvl: 41.5, cpm: 0.797800 },
-      { lvl: 42.0, cpm: 0.800300 },   { lvl: 42.5, cpm: 0.802800 },
-      { lvl: 43.0, cpm: 0.805300 },   { lvl: 43.5, cpm: 0.807800 },
-      { lvl: 44.0, cpm: 0.810300 },   { lvl: 44.5, cpm: 0.812800 },
-      { lvl: 45.0, cpm: 0.815300 },   { lvl: 45.5, cpm: 0.817800 },
-      { lvl: 46.0, cpm: 0.820300 },   { lvl: 46.5, cpm: 0.822800 },
-      { lvl: 47.0, cpm: 0.825300 },   { lvl: 47.5, cpm: 0.827800 },
-      { lvl: 48.0, cpm: 0.830300 },   { lvl: 48.5, cpm: 0.832800 },
-      { lvl: 49.0, cpm: 0.835300 },   { lvl: 49.5, cpm: 0.837800 },
-      { lvl: 50.0, cpm: 0.840300 },   { lvl: 50.5, cpm: 0.842800 },
-      { lvl: 51.0, cpm: 0.845300 }
+      { lvl: 1.0, cpm: 0.0940000000 },
+      { lvl: 1.5, cpm: 0.1351374322 },
+      { lvl: 2.0, cpm: 0.1663978700 },
+      { lvl: 2.5, cpm: 0.1926509145 },
+      { lvl: 3.0, cpm: 0.2157324700 },
+      { lvl: 3.5, cpm: 0.2365726554 },
+      { lvl: 4.0, cpm: 0.2557200500 },
+      { lvl: 4.5, cpm: 0.2735303793 },
+      { lvl: 5.0, cpm: 0.2902498800 },
+      { lvl: 5.5, cpm: 0.3060573800 },
+      { lvl: 6.0, cpm: 0.3210876000 },
+      { lvl: 6.5, cpm: 0.3354450259 },
+      { lvl: 7.0, cpm: 0.3492126800 },
+      { lvl: 7.5, cpm: 0.3624577531 },
+      { lvl: 8.0, cpm: 0.3752355900 },
+      { lvl: 8.5, cpm: 0.3875924046 },
+      { lvl: 9.0, cpm: 0.3995672800 },
+      { lvl: 9.5, cpm: 0.4111935446 },
+      { lvl: 10.0, cpm: 0.4225000100 },
+      { lvl: 10.5, cpm: 0.4329264149 },
+      { lvl: 11.0, cpm: 0.4431075500 },
+      { lvl: 11.5, cpm: 0.4530599544 },
+      { lvl: 12.0, cpm: 0.4627983900 },
+      { lvl: 12.5, cpm: 0.4723360877 },
+      { lvl: 13.0, cpm: 0.4816849500 },
+      { lvl: 13.5, cpm: 0.4908557997 },
+      { lvl: 14.0, cpm: 0.4998584400 },
+      { lvl: 14.5, cpm: 0.5087017604 },
+      { lvl: 15.0, cpm: 0.5173939500 },
+      { lvl: 15.5, cpm: 0.5259425088 },
+      { lvl: 16.0, cpm: 0.5343543300 },
+      { lvl: 16.5, cpm: 0.5426357632 },
+      { lvl: 17.0, cpm: 0.5507926900 },
+      { lvl: 17.5, cpm: 0.5588305688 },
+      { lvl: 18.0, cpm: 0.5667545200 },
+      { lvl: 18.5, cpm: 0.5745691456 },
+      { lvl: 19.0, cpm: 0.5822789100 },
+      { lvl: 19.5, cpm: 0.5898879124 },
+      { lvl: 20.0, cpm: 0.5974000100 },
+      { lvl: 20.5, cpm: 0.6048236528 },
+      { lvl: 21.0, cpm: 0.6121572900 },
+      { lvl: 21.5, cpm: 0.6194091012 },
+      { lvl: 22.0, cpm: 0.6266071200 },
+      { lvl: 22.5, cpm: 0.6337258487 },
+      { lvl: 23.0, cpm: 0.6407760000 },
+      { lvl: 23.5, cpm: 0.6477703447 },
+      { lvl: 24.0, cpm: 0.6546899700 },
+      { lvl: 24.5, cpm: 0.6613451388 },
+      { lvl: 25.0, cpm: 0.6679340000 },
+      { lvl: 25.5, cpm: 0.6745818989 },
+      { lvl: 26.0, cpm: 0.6811649200 },
+      { lvl: 26.5, cpm: 0.6876849043 },
+      { lvl: 27.0, cpm: 0.6941436500 },
+      { lvl: 27.5, cpm: 0.7005651088 },
+      { lvl: 28.0, cpm: 0.7069282400 },
+      { lvl: 28.5, cpm: 0.7132800318 },
+      { lvl: 29.0, cpm: 0.7195764400 },
+      { lvl: 29.5, cpm: 0.7256635388 },
+      { lvl: 30.0, cpm: 0.7317000000 },
+      { lvl: 30.5, cpm: 0.7347410090 },
+      { lvl: 31.0, cpm: 0.7377694800 },
+      { lvl: 31.5, cpm: 0.7407855740 },
+      { lvl: 32.0, cpm: 0.7437894300 },
+      { lvl: 32.5, cpm: 0.7467812110 },
+      { lvl: 33.0, cpm: 0.7497610400 },
+      { lvl: 33.5, cpm: 0.7527290870 },
+      { lvl: 34.0, cpm: 0.7556855100 },
+      { lvl: 34.5, cpm: 0.7586303686 },
+      { lvl: 35.0, cpm: 0.7615638400 },
+      { lvl: 35.5, cpm: 0.7644860650 },
+      { lvl: 36.0, cpm: 0.7673971700 },
+      { lvl: 36.5, cpm: 0.7702972650 },
+      { lvl: 37.0, cpm: 0.7731865000 },
+      { lvl: 37.5, cpm: 0.7760649640 },
+      { lvl: 38.0, cpm: 0.7789327500 },
+      { lvl: 38.5, cpm: 0.7817900540 },
+      { lvl: 39.0, cpm: 0.7846369700 },
+      { lvl: 39.5, cpm: 0.7874735740 },
+      { lvl: 40.0, cpm: 0.7903000100 },
+      { lvl: 40.5, cpm: 0.7928000100 },
+      { lvl: 41.0, cpm: 0.7953000100 },
+      { lvl: 41.5, cpm: 0.7978000100 },
+      { lvl: 42.0, cpm: 0.8003000100 },
+      { lvl: 42.5, cpm: 0.8028000100 },
+      { lvl: 43.0, cpm: 0.8053000100 },
+      { lvl: 43.5, cpm: 0.8078000100 },
+      { lvl: 44.0, cpm: 0.8103000100 },
+      { lvl: 44.5, cpm: 0.8128000100 },
+      { lvl: 45.0, cpm: 0.8153000100 },
+      { lvl: 45.5, cpm: 0.8178000100 },
+      { lvl: 46.0, cpm: 0.8203000100 },
+      { lvl: 46.5, cpm: 0.8228000100 },
+      { lvl: 47.0, cpm: 0.8253000100 },
+      { lvl: 47.5, cpm: 0.8278000100 },
+      { lvl: 48.0, cpm: 0.8303000100 },
+      { lvl: 48.5, cpm: 0.8328000100 },
+      { lvl: 49.0, cpm: 0.8353000100 },
+      { lvl: 49.5, cpm: 0.8378000100 },
+      { lvl: 50.0, cpm: 0.8403000100 },
+      { lvl: 50.5, cpm: 0.8428000100 },
+      { lvl: 51.0, cpm: 0.8453000100 }
     ];
 
     const TYPES_ES_MAP = {
@@ -491,7 +541,7 @@
     }
 
     function processRawData(rawData) {
-      // Exclusión total de variantes oscuras
+      // Excluir formas oscuras
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -502,7 +552,6 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        // EXTRACCIÓN BLINDADA DE STATS BASE (Cubre .atk, .baseAttack, .hp, .sta, .baseStamina)
         let atkVal = 100, defVal = 100, staVal = 100;
         if (p.baseStats) {
           atkVal = p.baseStats.atk !== undefined ? p.baseStats.atk : (p.baseStats.baseAttack || 100);
@@ -784,7 +833,7 @@
       calculateRankings();
     }
 
-    // CÁLCULO DE MEJOR NIVEL PASO A PASO (De 1.0 a 50.0/51.0 en incrementos de 0.5 para TODOS)
+    // CÁLCULO PRECISO DE STATS
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
       let best = { 
@@ -895,8 +944,10 @@
 
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
-      tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+      tbody.innerHTML = top10.map(item => {
+        const rowColor = selectedLeague === 'great' ? 'bg-blue-500/10 text-blue-300' : (selectedLeague === 'ultra' ? 'bg-amber-500/10 text-amber-300' : 'bg-purple-500/10 text-purple-300');
+        return `
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? rowColor + ' font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
@@ -904,7 +955,7 @@
           <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
           <td class="p-2.5 text-cyan-400">${item.percent}%</td>
         </tr>
-      `).join('');
+      `}).join('');
 
       lucide.createIcons();
     }
