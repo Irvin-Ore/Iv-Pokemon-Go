@@ -49,7 +49,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Oficial 100% IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor GameMaster Verificado)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -276,7 +276,7 @@
   </main>
 
   <script>
-    // MATRIZ OFICIAL DE CPM
+    // TABLA VERIFICADA DE MULTIPLICADORES CPM OFICIALES DE NIANTIC GAMEMASTER
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.0940000000 }, { lvl: 1.5, cpm: 0.1351374322 },
       { lvl: 2.0, cpm: 0.1663978700 }, { lvl: 2.5, cpm: 0.1926509145 },
@@ -306,7 +306,7 @@
       { lvl: 26.0, cpm: 0.6811649200 }, { lvl: 26.5, cpm: 0.6876849043 },
       { lvl: 27.0, cpm: 0.6941436500 }, { lvl: 27.5, cpm: 0.7005651088 },
       { lvl: 28.0, cpm: 0.7069282400 }, { lvl: 28.5, cpm: 0.7132800318 },
-      { lvl: 29.0, cpm: 0.7195764400 }, { lvl: 29.5, cpm: 0.7255756239 },
+      { lvl: 29.0, cpm: 0.7193990900 }, { lvl: 29.5, cpm: 0.7255756239 },
       { lvl: 30.0, cpm: 0.7317000000 }, { lvl: 30.5, cpm: 0.7347410090 },
       { lvl: 31.0, cpm: 0.7377694800 }, { lvl: 31.5, cpm: 0.7407855740 },
       { lvl: 32.0, cpm: 0.7437894300 }, { lvl: 32.5, cpm: 0.7467812110 },
@@ -358,7 +358,7 @@
       "LICK": "Lengüetazo", "ASTONISH": "Impresionar", "HEX": "Infortunio",
       "SMACK_DOWN": "Antiaéreo", "ROCK_THROW": "Lanzarrocas", "ROLLOUT": "Desenrollar",
       "BUG_BITE": "Picadura", "FURY_CUTTER": "Corte Furia", "INFESTATION": "Acoso",
-      "AIR_SLASH": "Tajo Aéreo", "DRAGON_TAIL": "Cola Dragón", "IRON_HEAD": "Cabeza de Hierro",
+      "AIR_SLASH": "Tajo Aéreo", "DRAGON_TAIL": "Cola DragÓN", "IRON_HEAD": "Cabeza de Hierro",
       "STEEL_WING": "Ala de Acero", "METAL_CLAW": "Garra Metal", "BULLET_PUNCH": "Puño Bala",
       "KARATE_CHOP": "Golpe Kárate", "LOW_KICK": "Patada Baja", "SUCKER_PUNCH": "Golpe Bajo",
       "BITE": "Mordisco", "FEINT_ATTACK": "Finta", "MUD_SLAP": "Bofetón Lodo",
@@ -768,7 +768,6 @@
       calculateRankings();
     }
 
-    // CÁLCULO PRECISO DE STATS
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
       let best = null;
@@ -861,7 +860,7 @@
       let userRank = '-';
       let userResult = null;
 
-      // CLASIFICACIÓN ESTÁNDAR DE COMPETICIÓN (1224) IDÉNTICA A IV4U
+      // CLASIFICACIÓN ESTÁNDAR 1224 IDÉNTICA A IV4U
       allCombos.forEach((item, index) => {
         if (index === 0) {
           item.rank = 1;
@@ -870,7 +869,7 @@
           if (Math.abs(prev.product - item.product) <= 0.0001) {
             item.rank = prev.rank;
           } else {
-            item.rank = index + 1; // Salto correcto por empate
+            item.rank = index + 1;
           }
         }
 
@@ -904,8 +903,10 @@
 
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
-      tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-amber-500/10 text-amber-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+      tbody.innerHTML = top10.map(item => {
+        const rowColor = selectedLeague === 'great' ? 'bg-blue-500/10 text-blue-300' : (selectedLeague === 'ultra' ? 'bg-amber-500/10 text-amber-300' : 'bg-purple-500/10 text-purple-300');
+        return `
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? rowColor + ' font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
@@ -913,7 +914,7 @@
           <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
           <td class="p-2.5 text-cyan-400">${item.percent}%</td>
         </tr>
-      `).join('');
+      `}).join('');
 
       lucide.createIcons();
     }
