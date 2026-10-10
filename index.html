@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Oficial Niantic / IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Stats 9% Nerf Niantic / IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -88,7 +88,7 @@
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Charizard, Swampert...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Necrozma, Charizard...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
@@ -104,13 +104,13 @@
               <span>Super Ball</span>
               <span class="text-[10px] font-normal text-slate-500">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Ultra Ball</span>
-              <span class="text-[10px] font-normal text-amber-300">2500 PC</span>
+              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
             </button>
-            <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="master" class="league-btn active py-2 px-2 rounded-xl border border-purple-500 bg-purple-500/20 text-purple-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Master Ball</span>
-              <span class="text-[10px] font-normal text-slate-500">Sin límite</span>
+              <span class="text-[10px] font-normal text-purple-300">Sin límite</span>
             </button>
           </div>
         </div>
@@ -142,7 +142,7 @@
           </div>
         </div>
 
-        <!-- Cadena Evolutiva (Sin Oscuros) -->
+        <!-- Cadena Evolutiva -->
         <div class="pt-3 border-t border-slate-800/80 space-y-2">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
             <i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -167,20 +167,20 @@
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-red-400">Ataque</span>
-              <input type="number" id="num-atk" min="0" max="15" value="0"
+              <input type="number" id="num-atk" min="0" max="15" value="15"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-red-400 py-1 focus:outline-none focus:border-red-500">
             </div>
-            <input type="range" id="iv-atk" min="0" max="15" value="0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-atk" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- Defensa -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
-              <input type="number" id="num-def" min="0" max="15" value="13"
+              <input type="number" id="num-def" min="0" max="15" value="15"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
-            <input type="range" id="iv-def" min="0" max="15" value="13" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- PS -->
@@ -221,7 +221,7 @@
           </div>
           <div class="text-right shrink-0">
             <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
-            <div id="res-rank" class="text-3xl font-black text-amber-400">#--</div>
+            <div id="res-rank" class="text-3xl font-black text-purple-400">#--</div>
           </div>
         </div>
 
@@ -292,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA OFICIAL EXACTA DE CPM DE NIANTIC (Validada con IV4U y PokeRanks)
+    // TABLA CPM OFICIAL DE NIANTIC
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -417,7 +417,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'ultra';
+    let selectedLeague = 'master';
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -434,6 +434,18 @@
       if (!name) return '-';
       let n = name;
 
+      // Necrozma
+      if (/necrozma_dawn_wings/i.test(speciesId) || /dawn wings/i.test(n)) {
+        return 'Necrozma (Alas del Alba)';
+      }
+      if (/necrozma_dusk_mane/i.test(speciesId) || /dusk mane/i.test(n)) {
+        return 'Necrozma (Melena Crepuscular)';
+      }
+      if (/necrozma_ultra/i.test(speciesId) || /necrozma ultra/i.test(n)) {
+        return 'Ultra Necrozma';
+      }
+
+      // Zacian y Zamazenta
       if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) return 'Zacian (Guerrero Avezado)';
       if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) return 'Zacian (Espada Suprema)';
       if (/crowned_shield/i.test(speciesId) || /crowned shield/i.test(n)) return 'Zamazenta (Escudo Supremo)';
@@ -487,7 +499,6 @@
     }
 
     function processRawData(rawData) {
-      // EXCLUSIÓN ABSOLUTA DE FORMAS OSCURAS PARA PREVENIR CRUCES
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -498,9 +509,19 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
-        const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
-        const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
+        let atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
+        let defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
+        let staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
+
+        // REGLA OFICIAL DE NIANTIC: 9% NERF PARA LEGENDARIOS QUE SUPEREN 4000 CP A NIVEL 40
+        // (Aplica a Necrozma Dawn Wings/Dusk Mane, Kyogre, Groudon, Dialga, Palkia, etc.)
+        const cpm40 = 0.79030001;
+        const maxCpLvl40Raw = Math.floor(((atkVal + 15) * Math.sqrt(defVal + 15) * Math.sqrt(staVal + 15) * Math.pow(cpm40, 2)) / 10);
+        if (maxCpLvl40Raw > 4000 && !p.speciesId.includes('_mega')) {
+          atkVal = Math.round(atkVal * 0.91);
+          defVal = Math.round(defVal * 0.91);
+          staVal = Math.round(staVal * 0.91);
+        }
 
         return {
           dex: p.dex || 0,
@@ -523,10 +544,7 @@
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
       statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
-      const charizard = pokemonDatabase.find(p => p.speciesId === 'charizard');
-      if (charizard) {
-        selectPokemon('charizard');
-      } else if (pokemonDatabase.length > 0) {
+      if (pokemonDatabase.length > 0) {
         selectPokemon(pokemonDatabase[0].speciesId);
       }
     }
@@ -635,18 +653,16 @@
       const container = document.getElementById('evolution-container');
       if (!selectedPokemon) return;
 
+      // Filtrar sólo formas de la misma especie exacta para evitar que salgan otros legendarios
       let relatives = [];
-      if (selectedPokemon.family) {
-        relatives = pokemonDatabase.filter(p => p.family === selectedPokemon.family);
+      if (selectedPokemon.dex) {
+        relatives = pokemonDatabase.filter(p => p.dex === selectedPokemon.dex);
+      }
+      if (relatives.length <= 1 && selectedPokemon.family) {
+        relatives = pokemonDatabase.filter(p => p.family === selectedPokemon.family && p.dex === selectedPokemon.dex);
       }
 
-      if (relatives.length <= 1 && selectedPokemon.dex) {
-        relatives = pokemonDatabase.filter(p => p.dex && Math.abs(p.dex - selectedPokemon.dex) <= 2);
-      }
-
-      relatives.sort((a, b) => (a.dex || 0) - (b.dex || 0));
-
-      if (relatives.length === 0) {
+      if (relatives.length <= 1) {
         container.innerHTML = `<span class="text-slate-500 italic text-[11px]">-</span>`;
         return;
       }
@@ -663,7 +679,6 @@
               ? 'bg-blue-600/20 border-blue-500 text-blue-300 shadow-sm' 
               : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white'}">
             <img src="${relImg}" class="w-4 h-4 object-contain shrink-0" onerror="this.style.display='none'">
-            <span class="text-[10px] font-mono text-slate-500">#${rel.dex || ''}</span>
             <span>${rel.name}</span>
           </button>
         `;
@@ -803,7 +818,6 @@
           const def = (baseDef + ivD) * step.cpm;
           const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm));
           
-          // FÓRMULA OFICIAL DE STAT PRODUCT DE IV4U
           const product = atk * def * hp;
           best = { 
             level: step.lvl, 
@@ -892,7 +906,7 @@
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
       tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-amber-500/10 text-amber-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-purple-500/10 text-purple-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
