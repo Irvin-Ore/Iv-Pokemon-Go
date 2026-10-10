@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Universal IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Universal Calibrado)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -88,7 +88,7 @@
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Necrozma, Charizard...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Swampert, Medicham, Charizard...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
@@ -100,13 +100,13 @@
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
-            <button data-league="great" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-blue-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="great" class="league-btn active py-2 px-2 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Super Ball</span>
-              <span class="text-[10px] font-normal text-slate-500">1500 PC</span>
+              <span class="text-[10px] font-normal text-blue-300">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Ultra Ball</span>
-              <span class="text-[10px] font-normal text-amber-300">2500 PC</span>
+              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
             </button>
             <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Master Ball</span>
@@ -158,7 +158,7 @@
           <div class="flex justify-between items-center">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">BUSCAR IVs</span>
             <div class="flex gap-1.5">
-              <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/13/15</button>
+              <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/15/15</button>
               <button id="preset-hundo" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">15/15/15</button>
             </div>
           </div>
@@ -177,10 +177,10 @@
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
-              <input type="number" id="num-def" min="0" max="15" value="13"
+              <input type="number" id="num-def" min="0" max="15" value="15"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
-            <input type="range" id="iv-def" min="0" max="15" value="13" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- PS -->
@@ -221,7 +221,7 @@
           </div>
           <div class="text-right shrink-0">
             <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
-            <div id="res-rank" class="text-3xl font-black text-amber-400">#--</div>
+            <div id="res-rank" class="text-3xl font-black text-blue-400">#--</div>
           </div>
         </div>
 
@@ -292,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA CPM OFICIAL (Nivel 1 al 40 de Niantic + Nivel 40 al 51 idéntico a IV4U: 0.840300 al Nv. 50 y 0.845300 al Nv. 51)
+    // TABLA CPM COMPLETA (Nivel 1.0 a 51.0 en incrementos de 0.5 para TODOS los Pokémon)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -417,7 +417,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'ultra';
+    let selectedLeague = 'great';
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -491,7 +491,7 @@
     }
 
     function processRawData(rawData) {
-      // Excluir formas oscuras
+      // Exclusión total de variantes oscuras
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -502,10 +502,17 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        // Se leen directamente los stats oficiales del JSON sin modificaciones artificiales
-        const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
-        const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
-        const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
+        // EXTRACCIÓN BLINDADA DE STATS BASE (Cubre .atk, .baseAttack, .hp, .sta, .baseStamina)
+        let atkVal = 100, defVal = 100, staVal = 100;
+        if (p.baseStats) {
+          atkVal = p.baseStats.atk !== undefined ? p.baseStats.atk : (p.baseStats.baseAttack || 100);
+          defVal = p.baseStats.def !== undefined ? p.baseStats.def : (p.baseStats.baseDefense || 100);
+          staVal = p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta !== undefined ? p.baseStats.sta : (p.baseStats.baseStamina || 100));
+        } else {
+          atkVal = p.baseAttack || 100;
+          defVal = p.baseDefense || 100;
+          staVal = p.baseStamina || 100;
+        }
 
         return {
           dex: p.dex || 0,
@@ -764,7 +771,7 @@
       });
     });
 
-    document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 13, 15));
+    document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 15, 15));
     document.getElementById('preset-hundo').addEventListener('click', () => setSliders(15, 15, 15));
 
     function setSliders(a, d, s) {
@@ -777,7 +784,7 @@
       calculateRankings();
     }
 
-    // CÁLCULO PRECISO DE STATS
+    // CÁLCULO DE MEJOR NIVEL PASO A PASO (De 1.0 a 50.0/51.0 en incrementos de 0.5 para TODOS)
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
       let best = { 
@@ -889,7 +896,7 @@
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
       tbody.innerHTML = top10.map(item => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-purple-500/10 text-purple-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
           <td class="p-2.5">${item.level.toFixed(1)}</td>
