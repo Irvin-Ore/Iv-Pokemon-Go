@@ -33,7 +33,6 @@
       cursor: pointer;
       border: 2px solid #ffffff;
     }
-    /* Estilo para los inputs de tipo number */
     input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { 
       opacity: 1;
@@ -85,11 +84,11 @@
   <!-- CONTENIDO PRINCIPAL -->
   <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- PANEL IZQUIERDO: SELECCIÓN & SLIDERS -->
+    <!-- PANEL IZQUIERDO: SELECCIÓN, EVOLUCIONES & SLIDERS -->
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
-        <!-- MEJORA 1: BÚSQUEDA PREDICTIVA CON DROPDOWN EN VIVO -->
+        <!-- Búsqueda Predictiva con Dropdown -->
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
@@ -98,10 +97,7 @@
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
 
-          <!-- Menú desplegable flotante de resultados -->
-          <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto divide-y divide-slate-800">
-            <!-- Se llena dinámicamente -->
-          </div>
+          <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto divide-y divide-slate-800"></div>
         </div>
 
         <!-- Selector de Liga -->
@@ -123,8 +119,19 @@
           </div>
         </div>
 
-        <!-- MEJORA 2: SLIDERS + INPUT NUMÉRICO DIRECTO (0 a 15) -->
-        <div class="pt-2 border-t border-slate-800/80 space-y-4">
+        <!-- REUBICACIÓN: CADENA EVOLUTIVA ANTES DE LOS IVs -->
+        <div class="pt-3 border-t border-slate-800/80 space-y-2">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i>
+            Cadena Evolutiva & Formas
+          </label>
+          <div id="evolution-container" class="flex flex-wrap items-center gap-1.5 text-xs">
+            <span class="text-slate-500 italic text-[11px]">No hay formas vinculadas.</span>
+          </div>
+        </div>
+
+        <!-- SECCIÓN DE IVs (SLIDERS + INPUT NUMÉRICO) -->
+        <div class="pt-3 border-t border-slate-800/80 space-y-4">
           <div class="flex justify-between items-center">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Valores Individuales (IVs)</span>
             <div class="flex gap-1.5">
@@ -166,11 +173,11 @@
 
       </div>
 
-      <!-- Tarjeta de ataques recomendados PvP -->
+      <!-- Tarjeta de ataques recomendados PvP (En Español España) -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
         <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
-          Ataques Recomendados PvP
+          Ataques Recomendados PvP (Español España)
         </h3>
         <div id="moveset-container" class="space-y-2 text-xs">
           <p class="text-slate-500 italic">Selecciona un Pokémon para ver sus movimientos.</p>
@@ -178,14 +185,13 @@
       </div>
     </div>
 
-    <!-- PANEL DERECHO: RESULTADOS, CADENA EVOLUTIVA Y RANKING -->
+    <!-- PANEL DERECHO: RESULTADOS Y RANKING -->
     <div class="lg:col-span-7 space-y-5">
       
       <!-- RESUMEN DEL RANKING -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
           <div>
-            <!-- MEJORA 3: Nombre con MEGA formateado adelante -->
             <h2 id="res-poke-name" class="text-2xl font-black tracking-wide text-white">---</h2>
             <div id="res-types" class="flex gap-1.5 mt-1.5"></div>
           </div>
@@ -215,24 +221,13 @@
         </div>
       </div>
 
-      <!-- MEJORA 4: SECCIÓN DE CADENA EVOLUTIVA (Anterior y Posterior) -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <i data-lucide="git-branch" class="w-4 h-4 text-cyan-400"></i>
-          Cadena Evolutiva & Formas de la Familia
-        </h3>
-        <div id="evolution-container" class="flex flex-wrap items-center gap-2 pt-1 text-xs">
-          <span class="text-slate-500 italic">No hay datos evolutivos.</span>
-        </div>
-      </div>
-
       <!-- TABLA DEL TOP 10 DE COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
           <span class="text-[11px] text-slate-500">De 4,096 combinaciones</span>
         </div>
-        <div class="overflow-x-auto max-h-[320px] overflow-y-auto rounded-xl border border-slate-800">
+        <div class="overflow-x-auto max-h-[360px] overflow-y-auto rounded-xl border border-slate-800">
           <table class="w-full text-left text-xs text-slate-300">
             <thead class="bg-slate-950 text-slate-400 uppercase font-semibold sticky top-0 border-b border-slate-800">
               <tr>
@@ -282,6 +277,70 @@
       48.5: 0.84734571, 49.0: 0.85038092, 49.5: 0.85341613, 50.0: 0.85645134, 50.5: 0.85948655, 51.0: 0.86252176
     };
 
+    // DICCIONARIO OFICIAL ESPAÑOL ESPAÑA PARA ATAQUES DE POKÉMON GO
+    const MOVES_ES_MAP = {
+      // Rápidos
+      "MUD_SHOT": "Disparo Lodo", "VINE_WHIP": "Látigo Cepa", "COUNTER": "Contraataque",
+      "SHADOW_CLAW": "Garra Umbría", "POWDER_SNOW": "Nieve Polvo", "LOCK_ON": "Fijar Blanco",
+      "INCINERATE": "Calcinación", "DRAGON_BREATH": "Dragoaliento", "WATERFALL": "Cascada",
+      "CHARM": "Encanto", "FAIRY_WIND": "Viento Feérico", "BULLET_SEED": "Semilladora",
+      "SNARL": "Alarido", "POISON_JAB": "Puya Nociva", "WING_ATTACK": "Ataque Ala",
+      "GUST": "Tornado", "FORCE_PALM": "Palmeo", "VOLT_SWITCH": "Voltiocambio",
+      "SPARK": "Chispa", "THUNDER_SHOCK": "Impactrueno", "CONFUSION": "Confusión",
+      "PSYCHO_CUT": "Psicocorte", "ICE_SHARD": "Canto Helado", "FROST_BREATH": "Vaho Gélido",
+      "FIRE_SPIN": "Giro Fuego", "FIRE_FANG": "Colmillo Ígneo", "EMBER": "Ascuas",
+      "LICK": "Lengüetazo", "ASTONISH": "Impresionar", "HEX": "Infortunio",
+      "SMACK_DOWN": "Antiaéreo", "ROCK_THROW": "Lanzarrocas", "ROLLOUT": "Desenrollar",
+      "BUG_BITE": "Picadura", "FURY_CUTTER": "Corte Furia", "INFESTATION": "Acoso",
+      "AIR_SLASH": "Tajo Aéreo", "DRAGON_TAIL": "Cola Dragón", "IRON_HEAD": "Cabeza de Hierro",
+      "STEEL_WING": "Ala de Acero", "METAL_CLAW": "Garra Metal", "BULLET_PUNCH": "Puño Bala",
+      "KARATE_CHOP": "Golpe Kárate", "LOW_KICK": "Patada Baja", "SUCKER_PUNCH": "Golpe Bajo",
+      "BITE": "Mordisco", "FEINT_ATTACK": "Finta", "MUD_SLAP": "Bofetón Lodo",
+      "WATER_GUN": "Pistola Agua", "BUBBLE": "Burbuja", "RAZOR_LEAF": "Hoja Afilada",
+      "MAGICAL_LEAF": "Hoja Mágica", "QUICK_ATTACK": "Ataque Rápido", "TACKLE": "Placaje",
+      "SCRATCH": "Arañazo", "PECK": "Picotazo", "ACID": "Ácido",
+
+      // Cargados
+      "HYDRO_CANNON": "Hidrocañón", "FRENZY_PLANT": "Planta Feroz", "BLAST_BURN": "Anillo Ígneo",
+      "EARTHQUAKE": "Terremoto", "ICE_BEAM": "Rayo Hielo", "SURF": "Surf",
+      "BLIZZARD": "Ventisca", "WEATHER_BALL": "Meteorobola", "HYDRO_PUMP": "Hidrobomba",
+      "SHADOW_BALL": "Bola Sombra", "PSYCHIC": "Psíquico", "FOCUS_BLAST": "Onda Certera",
+      "CLOSE_COMBAT": "A Bocajarro", "SUPER_POWER": "Fuerza Bruta", "SUPERPOWER": "Fuerza Bruta",
+      "DYNAMIC_PUNCH": "Puño Dinámico", "CROSS_CHOP": "Tajo Cruzado", "SACRED_SWORD": "Espada Santa",
+      "FLY": "Vuelo", "SKY_ATTACK": "Ataque Aéreo", "BRAVE_BIRD": "Pájaro Osado",
+      "HURRICANE": "Vendaval", "AERIAL_ACE": "Golpe Aéreo", "DRILL_PECK": "Pico Taladro",
+      "METEOR_MASH": "Puño Meteoro", "FLASH_CANNON": "Foco Resplandor", "HEAVY_SLAM": "Cuerpo Pesado",
+      "WILD_CHARGE": "Voltio Cruel", "THUNDERBOLT": "Rayo", "THUNDER": "Trueno",
+      "ZAP_CANNON": "Electrocañón", "DISCHARGE": "Chispazo", "OVERHEAT": "Sofoco",
+      "FLAMETHROWER": "Lanzallamas", "FIRE_BLAST": "Llamarada", "OUTRAGE": "Enfado",
+      "DRAGON_CLAW": "Garra Dragón", "DRACO_METEOR": "Cometa Draco", "CRUNCH": "Triturar",
+      "FOUL_PLAY": "Juego Sucio", "DARK_PULSE": "Pulso Umbrío", "NIGHT_SLASH": "Tajo Umbrío",
+      "SLUDGE_BOMB": "Bomba Lodo", "SLUDGE_WAVE": "Onda Tóxica", "GUNK_SHOT": "Lanzamugre",
+      "POISON_FANG": "Colmillo Veneno", "MOONBLAST": "Fuerza Lunar", "PLAY_ROUGH": "Carantoña",
+      "DAZZLING_GLEAM": "Brillo Mágico", "ROCK_SLIDE": "Avalancha", "STONE_EDGE": "Roca Afilada",
+      "POWER_GEM": "Joya de Luz", "ANCIENT_POWER": "Poder Pasado", "DRILL_RUN": "Taladradora",
+      "EARTH_POWER": "Tierra Viva", "SCORCHING_SANDS": "Arenas Ardientes", "MUD_BOMB": "Bomba Fango",
+      "BONE_CLUB": "Hueso Palo", "SEED_BOMB": "Bomba Germen", "LEAF_BLADE": "Hoja Aguda",
+      "SOLAR_BEAM": "Rayo Solar", "GRASS_KNOT": "Hierba Lazo", "ENERGY_BALL": "Energibola",
+      "POWER_WHIP": "Latigazo", "ICY_WIND": "Viento Hielo", "AVALANCHE": "Alud",
+      "AURORA_BEAM": "Rayo Aurora", "MEGAHORN": "Megacuerno", "X_SCISSOR": "Tijera X",
+      "LUNGE": "Plancha", "BUG_BUZZ": "Zumbido", "BODY_SLAM": "Golpe Cuerpo",
+      "HYPER_BEAM": "Híper Rayo", "TRI_ATTACK": "Triataque", "SKULL_BASH": "Cabezazo"
+    };
+
+    // Función que traduce y embellece nombres de ataques al Español España oficial
+    function translateMove(moveStr) {
+      if (!moveStr) return '';
+      const key = moveStr.toUpperCase().trim().replace(/[\s-]+/g, '_');
+      if (MOVES_ES_MAP[key]) return MOVES_ES_MAP[key];
+
+      // Formato legible por defecto si no está en el mapa
+      return moveStr
+        .replace(/_/g, ' ')
+        .toLowerCase()
+        .replace(/\b\w/g, l => l.toUpperCase());
+    }
+
     let pokemonDatabase = [];
     let selectedPokemon = null;
     let selectedLeague = 'great';
@@ -292,33 +351,25 @@
       master: 10000
     };
 
-    // MEJORA 3: Función para formatear el nombre colocando "Mega" al inicio
+    // Formatear nombres colocando "Mega" al inicio
     function formatMegaName(name) {
       if (!name) return '';
-      // Si contiene "(Mega X)" -> "Mega [Nombre] X"
       if (/\(Mega\s*X\)/i.test(name)) {
-        const base = name.replace(/\(Mega\s*X\)/i, '').trim();
-        return `Mega ${base} X`;
+        return `Mega ${name.replace(/\(Mega\s*X\)/i, '').trim()} X`;
       }
-      // Si contiene "(Mega Y)" -> "Mega [Nombre] Y"
       if (/\(Mega\s*Y\)/i.test(name)) {
-        const base = name.replace(/\(Mega\s*Y\)/i, '').trim();
-        return `Mega ${base} Y`;
+        return `Mega ${name.replace(/\(Mega\s*Y\)/i, '').trim()} Y`;
       }
-      // Si contiene "(Mega)" -> "Mega [Nombre]"
       if (/\(Mega\)/i.test(name)) {
-        const base = name.replace(/\(Mega\)/i, '').trim();
-        return `Mega ${base}`;
+        return `Mega ${name.replace(/\(Mega\)/i, '').trim()}`;
       }
-      // Si termina en " Mega" o contiene "_mega"
       if (name.toLowerCase().endsWith(' mega')) {
-        const base = name.slice(0, -5).trim();
-        return `Mega ${base}`;
+        return `Mega ${name.slice(0, -5).trim()}`;
       }
       return name;
     }
 
-    // FORMULA OFICIAL DE CP DE POKÉMON GO
+    // Fórmula oficial de PC en Pokémon GO
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
@@ -327,7 +378,7 @@
       return Math.max(10, cp);
     }
 
-    // CARGA DE DATOS
+    // Carga de datos
     async function loadDatabase() {
       const statusBadge = document.getElementById('db-status-badge');
       try {
@@ -343,7 +394,7 @@
       }
     }
 
-    // PROCESAMIENTO Y NORMALIZACIÓN DE DATOS
+    // Procesar y normalizar base de datos
     function processRawData(rawData) {
       pokemonDatabase = rawData.map(p => {
         const rawName = p.speciesName || p.name || p.speciesId;
@@ -375,7 +426,7 @@
       }
     }
 
-    // MEJORA 1: BÚSQUEDA PREDICTIVA CON DROPDOWN FLOTANTE
+    // Búsqueda Predictiva con Dropdown
     const searchInput = document.getElementById('poke-search');
     const searchDropdown = document.getElementById('search-dropdown');
 
@@ -390,7 +441,7 @@
         p.name.toLowerCase().includes(q) || 
         p.speciesId.toLowerCase().includes(q) ||
         (p.dex && p.dex.toString() === q)
-      ).slice(0, 15); // Mostrar los primeros 15 resultados más relevantes
+      ).slice(0, 15);
 
       if (matches.length === 0) {
         searchDropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic text-center">No se encontraron resultados</div>`;
@@ -413,23 +464,20 @@
       searchDropdown.classList.remove('hidden');
     });
 
-    // Clic en un resultado del dropdown
     searchDropdown.addEventListener('click', (e) => {
       const item = e.target.closest('[data-id]');
       if (!item) return;
-      const speciesId = item.dataset.id;
-      selectPokemon(speciesId);
+      selectPokemon(item.dataset.id);
       searchDropdown.classList.add('hidden');
     });
 
-    // Cerrar el dropdown al hacer clic fuera
     document.addEventListener('click', (e) => {
       if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
         searchDropdown.classList.add('hidden');
       }
     });
 
-    // CARGA MANUAL EN CASO DE PROTOCOLO FILE://
+    // Subida manual si el protocolo es file://
     document.getElementById('manual-file-input').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -446,7 +494,7 @@
       reader.readAsText(file);
     });
 
-    // SELECCIONAR POKÉMON Y ACTUALIZAR VISTA
+    // Selección de Pokémon
     function selectPokemon(speciesId) {
       selectedPokemon = pokemonDatabase.find(p => p.speciesId === speciesId);
       if (!selectedPokemon) return;
@@ -454,7 +502,6 @@
       searchInput.value = selectedPokemon.name;
       document.getElementById('res-poke-name').innerText = selectedPokemon.name;
       
-      // Badges de tipos
       const typeContainer = document.getElementById('res-types');
       typeContainer.innerHTML = selectedPokemon.types.map(t => 
         `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t}</span>`
@@ -465,37 +512,34 @@
       calculateRankings();
     }
 
-    // MEJORA 4: CALCULAR Y RENDERIZAR LA CADENA EVOLUTIVA (Anteriores y Posteriores)
+    // Renderizado de la Cadena Evolutiva (En el panel izquierdo antes de los IVs)
     function renderEvolutionChain() {
       const container = document.getElementById('evolution-container');
       if (!selectedPokemon) return;
 
-      // Buscar parientes: por ID de familia de PvPoke o por coincidencia en Dex (+/- 1 y 2)
       let relatives = [];
       if (selectedPokemon.family) {
         relatives = pokemonDatabase.filter(p => p.family === selectedPokemon.family);
       }
 
       if (relatives.length <= 1 && selectedPokemon.dex) {
-        // Fallback por rango de Pokédex si no está definido el familyId
         relatives = pokemonDatabase.filter(p => p.dex && Math.abs(p.dex - selectedPokemon.dex) <= 2);
       }
 
-      // Ordenar por número de dex y nombre
       relatives.sort((a, b) => (a.dex || 0) - (b.dex || 0));
 
       if (relatives.length === 0) {
-        container.innerHTML = `<span class="text-slate-500 italic">No se encontraron formas evolutivas vinculadas.</span>`;
+        container.innerHTML = `<span class="text-slate-500 italic text-[11px]">No se encontraron formas vinculadas.</span>`;
         return;
       }
 
       container.innerHTML = relatives.map((rel, idx) => {
         const isCurrent = rel.speciesId === selectedPokemon.speciesId;
-        const arrow = (idx > 0) ? `<i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600"></i>` : '';
+        const arrow = (idx > 0) ? `<i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600 shrink-0"></i>` : '';
         return `
           ${arrow}
           <button onclick="selectPokemon('${rel.speciesId}')"
-            class="px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition flex items-center gap-1.5
+            class="px-2.5 py-1 rounded-lg border text-xs font-semibold transition flex items-center gap-1.5
             ${isCurrent 
               ? 'bg-blue-600/20 border-blue-500 text-blue-300 shadow-sm' 
               : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white'}">
@@ -508,22 +552,26 @@
       lucide.createIcons();
     }
 
+    // Renderizado de ataques recomendados PvP (En Español España)
     function renderMovesets() {
       const container = document.getElementById('moveset-container');
       if (!selectedPokemon) return;
 
       const eliteList = selectedPokemon.eliteMoves || [];
-      const fastHtml = selectedPokemon.fastMoves.slice(0, 3).map(m => {
+
+      const fastHtml = selectedPokemon.fastMoves.slice(0, 4).map(m => {
         const isElite = eliteList.includes(m);
+        const nameEs = translateMove(m);
         return `<span class="inline-flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded text-slate-200">
-          ${m} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
+          ${nameEs} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
         </span>`;
       }).join(' ');
 
-      const chargedHtml = selectedPokemon.chargedMoves.slice(0, 4).map(m => {
+      const chargedHtml = selectedPokemon.chargedMoves.slice(0, 5).map(m => {
         const isElite = eliteList.includes(m);
+        const nameEs = translateMove(m);
         return `<span class="inline-flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded text-slate-200">
-          ${m} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
+          ${nameEs} ${isElite ? '<span class="text-[9px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-1 rounded font-bold">MT ÉLITE</span>' : ''}
         </span>`;
       }).join(' ');
 
@@ -539,7 +587,7 @@
       `;
     }
 
-    // SELECTORES DE LIGA
+    // Selectores de Liga
     document.querySelectorAll('.league-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.league-btn').forEach(b => {
@@ -551,18 +599,16 @@
       });
     });
 
-    // MEJORA 2: SINCRONIZACIÓN DE SLIDERS CON INPUTS NUMÉRICOS (0 A 15)
+    // Sincronización Sliders + Inputs Numéricos
     ['atk', 'def', 'sta'].forEach(stat => {
       const slider = document.getElementById(`iv-${stat}`);
       const numInput = document.getElementById(`num-${stat}`);
 
-      // Al mover el slider
       slider.addEventListener('input', () => {
         numInput.value = slider.value;
         calculateRankings();
       });
 
-      // Al escribir directamente en el input numérico
       numInput.addEventListener('input', () => {
         let val = parseInt(numInput.value);
         if (isNaN(val)) val = 0;
@@ -574,7 +620,6 @@
       });
     });
 
-    // BOTONES DE PRESETS
     document.getElementById('preset-pvp').addEventListener('click', () => setSliders(0, 15, 15));
     document.getElementById('preset-hundo').addEventListener('click', () => setSliders(15, 15, 15));
 
@@ -588,7 +633,6 @@
       calculateRankings();
     }
 
-    // CALCULAR MEJOR NIVEL
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
       let best = { level: 1, cp: 10, product: 0, cpm: CPM_MAP[1.0] };
       const levels = Object.keys(CPM_MAP).map(Number).sort((a,b) => a - b);
@@ -610,7 +654,6 @@
       return best;
     }
 
-    // CALCULAR RANKINGS COMPLETOS
     function calculateRankings() {
       if (!selectedPokemon) return;
 
@@ -674,7 +717,6 @@
       lucide.createIcons();
     }
 
-    // INICIALIZACIÓN
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       loadDatabase();
