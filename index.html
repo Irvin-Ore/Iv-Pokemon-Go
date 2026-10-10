@@ -90,7 +90,7 @@
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
-            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Zacian, Swampert...)"
+            <input type="text" id="poke-search" autocomplete="off" placeholder="Escribe para buscar (ej: Charizard, Swampert...)"
               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3"></i>
           </div>
@@ -152,10 +152,10 @@
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
-              <input type="number" id="num-def" min="0" max="15" value="15"
+              <input type="number" id="num-def" min="0" max="15" value="13"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
-            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-def" min="0" max="15" value="13" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- PS -->
@@ -190,7 +190,6 @@
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-5">
           <div class="flex items-center gap-3.5">
-            <!-- Imagen oficial del Pokémon -->
             <img id="res-poke-img" src="" alt="" class="w-16 h-16 object-contain bg-slate-950/70 p-1.5 rounded-2xl border border-slate-800 shrink-0">
             <div>
               <h2 id="res-poke-name" class="text-2xl font-black tracking-wide text-white leading-tight">---</h2>
@@ -223,7 +222,7 @@
         </div>
       </div>
 
-      <!-- TABLA DEL TOP 10 DE COMBINACIONES -->
+      <!-- TABLA DEL TOP COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
@@ -255,31 +254,60 @@
   </main>
 
   <script>
-    // CPM OFICIALES DE NIANTIC (Niveles 1.0 a 51.0 cada 0.5 niveles)
-    const CPM_MAP = {
-      1.0: 0.094, 1.5: 0.135137432, 2.0: 0.16639787, 2.5: 0.192650919, 3.0: 0.21573247,
-      3.5: 0.236572661, 4.0: 0.25572005, 4.5: 0.273530381, 5.0: 0.29024988, 5.5: 0.306057377,
-      6.0: 0.3210876, 6.5: 0.335445036, 7.0: 0.34921268, 7.5: 0.362457751, 8.0: 0.37523559,
-      8.5: 0.387592406, 9.0: 0.39956728, 9.5: 0.411193551, 10.0: 0.42250001, 10.5: 0.432926419,
-      11.0: 0.44310755, 11.5: 0.453059958, 12.0: 0.46279839, 12.5: 0.472336083, 13.0: 0.48168495,
-      13.5: 0.4908558, 14.0: 0.49985844, 14.5: 0.508701765, 15.0: 0.51739395, 15.5: 0.525942511,
-      16.0: 0.53435433, 16.5: 0.542635767, 17.0: 0.55079269, 17.5: 0.558830576, 18.0: 0.56675452,
-      18.5: 0.574569153, 19.0: 0.58227891, 19.5: 0.589887917, 20.0: 0.59740001, 20.5: 0.604818814,
-      21.0: 0.61215729, 21.5: 0.619418992, 22.0: 0.62660712, 22.5: 0.633724976, 23.0: 0.640776,
-      23.5: 0.647763197, 24.0: 0.65468997, 24.5: 0.66155949, 25.0: 0.66837322, 25.5: 0.675133489,
-      26.0: 0.68184144, 26.5: 0.688499969, 27.0: 0.6951105, 27.5: 0.701675175, 28.0: 0.70819544,
-      28.5: 0.714673239, 29.0: 0.7211099, 29.5: 0.727507388, 30.0: 0.73386624, 30.5: 0.736965839,
-      31.0: 0.74005878, 31.5: 0.743152597, 32.0: 0.7462464, 32.5: 0.749340203, 33.0: 0.752434,
-      33.5: 0.755527797, 34.0: 0.7586216, 34.5: 0.761715403, 35.0: 0.76480917, 35.5: 0.767902973,
-      36.0: 0.7709968, 36.5: 0.774090603, 37.0: 0.7771844, 37.5: 0.780278197, 38.0: 0.783372,
-      38.5: 0.786465803, 39.0: 0.7895596, 39.5: 0.792653397, 40.0: 0.79574714, 40.5: 0.79878235,
-      41.0: 0.80181756, 41.5: 0.80485277, 42.0: 0.80788798, 42.5: 0.81092319, 43.0: 0.8139584,
-      43.5: 0.81699361, 44.0: 0.82002882, 44.5: 0.82306403, 45.0: 0.82609924, 45.5: 0.82913445,
-      46.0: 0.83216966, 46.5: 0.83520487, 47.0: 0.83824008, 47.5: 0.84127529, 48.0: 0.8443105,
-      48.5: 0.84734571, 49.0: 0.85038092, 49.5: 0.85341613, 50.0: 0.85645134, 50.5: 0.85948655, 51.0: 0.86252176
-    };
+    // CPM OFICIALES DE NIANTIC INDEXADOS POR NIVEL EXACTO (Pasos de 0.5)
+    const CPM_STEPS = [
+      { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
+      { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
+      { lvl: 3.0, cpm: 0.21573247 }, { lvl: 3.5, cpm: 0.236572661 },
+      { lvl: 4.0, cpm: 0.25572005 }, { lvl: 4.5, cpm: 0.273530381 },
+      { lvl: 5.0, cpm: 0.29024988 }, { lvl: 5.5, cpm: 0.306057377 },
+      { lvl: 6.0, cpm: 0.3210876 }, { lvl: 6.5, cpm: 0.335445036 },
+      { lvl: 7.0, cpm: 0.34921268 }, { lvl: 7.5, cpm: 0.362457751 },
+      { lvl: 8.0, cpm: 0.37523559 }, { lvl: 8.5, cpm: 0.387592406 },
+      { lvl: 9.0, cpm: 0.39956728 }, { lvl: 9.5, cpm: 0.411193551 },
+      { lvl: 10.0, cpm: 0.42250001 }, { lvl: 10.5, cpm: 0.432926419 },
+      { lvl: 11.0, cpm: 0.44310755 }, { lvl: 11.5, cpm: 0.453059958 },
+      { lvl: 12.0, cpm: 0.46279839 }, { lvl: 12.5, cpm: 0.472336083 },
+      { lvl: 13.0, cpm: 0.48168495 }, { lvl: 13.5, cpm: 0.4908558 },
+      { lvl: 14.0, cpm: 0.49985844 }, { lvl: 14.5, cpm: 0.508701765 },
+      { lvl: 15.0, cpm: 0.51739395 }, { lvl: 15.5, cpm: 0.525942511 },
+      { lvl: 16.0, cpm: 0.53435433 }, { lvl: 16.5, cpm: 0.542635767 },
+      { lvl: 17.0, cpm: 0.55079269 }, { lvl: 17.5, cpm: 0.558830576 },
+      { lvl: 18.0, cpm: 0.56675452 }, { lvl: 18.5, cpm: 0.574569153 },
+      { lvl: 19.0, cpm: 0.58227891 }, { lvl: 19.5, cpm: 0.589887917 },
+      { lvl: 20.0, cpm: 0.59740001 }, { lvl: 20.5, cpm: 0.604818814 },
+      { lvl: 21.0, cpm: 0.61215729 }, { lvl: 21.5, cpm: 0.619418992 },
+      { lvl: 22.0, cpm: 0.62660712 }, { lvl: 22.5, cpm: 0.633724976 },
+      { lvl: 23.0, cpm: 0.640776 }, { lvl: 23.5, cpm: 0.647763197 },
+      { lvl: 24.0, cpm: 0.65468997 }, { lvl: 24.5, cpm: 0.66155949 },
+      { lvl: 25.0, cpm: 0.66837322 }, { lvl: 25.5, cpm: 0.675133489 },
+      { lvl: 26.0, cpm: 0.68184144 }, { lvl: 26.5, cpm: 0.688499969 },
+      { lvl: 27.0, cpm: 0.6951105 }, { lvl: 27.5, cpm: 0.701675175 },
+      { lvl: 28.0, cpm: 0.70819544 }, { lvl: 28.5, cpm: 0.714673239 },
+      { lvl: 29.0, cpm: 0.7211099 }, { lvl: 29.5, cpm: 0.727507388 },
+      { lvl: 30.0, cpm: 0.73386624 }, { lvl: 30.5, cpm: 0.736965839 },
+      { lvl: 31.0, cpm: 0.74005878 }, { lvl: 31.5, cpm: 0.743152597 },
+      { lvl: 32.0, cpm: 0.7462464 }, { lvl: 32.5, cpm: 0.749340203 },
+      { lvl: 33.0, cpm: 0.752434 }, { lvl: 33.5, cpm: 0.755527797 },
+      { lvl: 34.0, cpm: 0.7586216 }, { lvl: 34.5, cpm: 0.761715403 },
+      { lvl: 35.0, cpm: 0.76480917 }, { lvl: 35.5, cpm: 0.767902973 },
+      { lvl: 36.0, cpm: 0.7709968 }, { lvl: 36.5, cpm: 0.774090603 },
+      { lvl: 37.0, cpm: 0.7771844 }, { lvl: 37.5, cpm: 0.780278197 },
+      { lvl: 38.0, cpm: 0.783372 }, { lvl: 38.5, cpm: 0.786465803 },
+      { lvl: 39.0, cpm: 0.7895596 }, { lvl: 39.5, cpm: 0.792653397 },
+      { lvl: 40.0, cpm: 0.79574714 }, { lvl: 40.5, cpm: 0.79878235 },
+      { lvl: 41.0, cpm: 0.80181756 }, { lvl: 41.5, cpm: 0.80485277 },
+      { lvl: 42.0, cpm: 0.80788798 }, { lvl: 42.5, cpm: 0.81092319 },
+      { lvl: 43.0, cpm: 0.8139584 }, { lvl: 43.5, cpm: 0.81699361 },
+      { lvl: 44.0, cpm: 0.82002882 }, { lvl: 44.5, cpm: 0.82306403 },
+      { lvl: 45.0, cpm: 0.82609924 }, { lvl: 45.5, cpm: 0.82913445 },
+      { lvl: 46.0, cpm: 0.83216966 }, { lvl: 46.5, cpm: 0.83520487 },
+      { lvl: 47.0, cpm: 0.83824008 }, { lvl: 47.5, cpm: 0.84127529 },
+      { lvl: 48.0, cpm: 0.8443105 }, { lvl: 48.5, cpm: 0.84734571 },
+      { lvl: 49.0, cpm: 0.85038092 }, { lvl: 49.5, cpm: 0.85341613 },
+      { lvl: 50.0, cpm: 0.85645134 }
+    ];
 
-    // MAPA DE TIPOS OFICIALES
     const TYPES_ES_MAP = {
       "normal": "Normal", "fire": "Fuego", "water": "Agua", "grass": "Planta",
       "electric": "Eléctrico", "ice": "Hielo", "fighting": "Lucha", "poison": "Veneno",
@@ -294,9 +322,7 @@
       return TYPES_ES_MAP[key] || t;
     }
 
-    // DICCIONARIO COMPLETO DE ATAQUES EN ESPAÑOL DE ESPAÑA
     const MOVES_ES_MAP = {
-      // Rápidos
       "MUD_SHOT": "Disparo Lodo", "VINE_WHIP": "Látigo Cepa", "COUNTER": "Contraataque",
       "SHADOW_CLAW": "Garra Umbría", "POWDER_SNOW": "Nieve Polvo", "LOCK_ON": "Fijar Blanco",
       "INCINERATE": "Calcinación", "DRAGON_BREATH": "Dragoaliento", "WATERFALL": "Cascada",
@@ -317,7 +343,6 @@
       "MAGICAL_LEAF": "Hoja Mágica", "QUICK_ATTACK": "Ataque Rápido", "TACKLE": "Placaje",
       "SCRATCH": "Arañazo", "PECK": "Picotazo", "ACID": "Ácido", "DOUBLE_KICK": "Doble Patada",
 
-      // Cargados
       "HYDRO_CANNON": "Hidrocañón", "FRENZY_PLANT": "Planta Feroz", "BLAST_BURN": "Anillo Ígneo",
       "EARTHQUAKE": "Terremoto", "ICE_BEAM": "Rayo Hielo", "SURF": "Surf",
       "BLIZZARD": "Ventisca", "WEATHER_BALL": "Meteorobola", "HYDRO_PUMP": "Hidrobomba",
@@ -344,7 +369,8 @@
       "LUNGE": "Plancha", "BUG_BUZZ": "Zumbido", "BODY_SLAM": "Golpe Cuerpo",
       "HYPER_BEAM": "Híper Rayo", "TRI_ATTACK": "Triataque", "SKULL_BASH": "Cabezazo",
       "ACROBATICS": "Acrobacia", "HIGH_HORSEPOWER": "Fuerza Equina", "LIQUIDATION": "Hidroariete",
-      "SHADOW_BONE": "Hueso Sombrío", "BRUTAL_SWING": "Giro Vil", "TRAILBLAZE": "Abrecaminos"
+      "SHADOW_BONE": "Hueso Sombrío", "BRUTAL_SWING": "Giro Vil", "TRAILBLAZE": "Abrecaminos",
+      "DRAGON_BREATH": "Dragoaliento"
     };
 
     function translateMove(moveStr) {
@@ -356,7 +382,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'great';
+    let selectedLeague = 'ultra'; // Por defecto iniciamos con ultra para validar Charizard
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -364,20 +390,17 @@
       master: 10000
     };
 
-    // FUNCIÓN DE IMÁGENES OFICIALES
     function getPokemonImageUrl(dex, speciesId) {
       if (!dex) return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dex}.png`;
     }
 
-    // FORMATEO COMPLETO Y TRADUCCIÓN DE ESPECIES Y FORMAS
     function formatSpecialName(name, speciesId) {
       if (!name) return '-';
       let n = name;
 
-      // Zacian y Zamazenta
       if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) {
-        return n.replace(/hero of many battles/i, 'Guerrero Avezado').replace(/hero_of_many_battles/i, 'Guerrero Avezado');
+        return 'Zacian (Guerrero Avezado)';
       }
       if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) {
         return 'Zacian (Espada Suprema)';
@@ -386,7 +409,6 @@
         return 'Zamazenta (Escudo Supremo)';
       }
 
-      // Arceus
       if (n.toLowerCase().startsWith('arceus')) {
         n = n.replace(/\(Ground\)/i, '(Tierra)')
              .replace(/\(Fire\)/i, '(Fuego)')
@@ -407,21 +429,18 @@
              .replace(/\(Fairy\)/i, '(Hada)');
       }
 
-      // Shadow -> Oscuro
       if (/\(Shadow\)/i.test(n)) {
         n = n.replace(/\(Shadow\)/i, '').trim() + ' oscuro';
       } else if (n.toLowerCase().endsWith('_shadow')) {
         n = n.replace(/_shadow/i, '').trim() + ' oscuro';
       }
 
-      // Primal -> Primigenio
       if (/\(Primal\)/i.test(n)) {
         n = n.replace(/\(Primal\)/i, '').trim() + ' primigenio';
       } else if (n.toLowerCase().startsWith('primal ')) {
         n = n.replace(/primal\s+/i, '').trim() + ' primigenio';
       }
 
-      // Megas al inicio
       if (/\(Mega\s*X\)/i.test(n)) {
         n = `Mega ${n.replace(/\(Mega\s*X\)/i, '').trim()} X`;
       } else if (/\(Mega\s*Y\)/i.test(n)) {
@@ -432,7 +451,6 @@
         n = `Mega ${n.slice(0, -5).trim()}`;
       }
 
-      // Formas Regionales
       n = n.replace(/\(Alolan\)/i, '(Alola)')
            .replace(/\(Galarian\)/i, '(Galar)')
            .replace(/\(Hisuian\)/i, '(Hisui)')
@@ -441,7 +459,7 @@
       return n;
     }
 
-    // FÓRMULA OFICIAL EXACTA DE CP DE POKÉMON GO
+    // FÓRMULA OFICIAL DE CP DE NIANTIC
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
@@ -491,12 +509,15 @@
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
       statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
 
-      if (pokemonDatabase.length > 0) {
+      // Seleccionar Charizard base por defecto si existe
+      const charizard = pokemonDatabase.find(p => p.speciesId === 'charizard');
+      if (charizard) {
+        selectPokemon('charizard');
+      } else if (pokemonDatabase.length > 0) {
         selectPokemon(pokemonDatabase[0].speciesId);
       }
     }
 
-    // Búsqueda con Dropdown y Miniaturas de Imagen
     const searchInput = document.getElementById('poke-search');
     const searchDropdown = document.getElementById('search-dropdown');
 
@@ -578,13 +599,11 @@
 
       document.getElementById('res-poke-name').innerText = selectedPokemon.name;
       
-      // Actualizar imagen principal oficial
       const mainImg = document.getElementById('res-poke-img');
       mainImg.src = getPokemonImageUrl(selectedPokemon.dex, selectedPokemon.speciesId);
       mainImg.alt = selectedPokemon.name;
       mainImg.onerror = () => { mainImg.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'; };
       
-      // Tipos (con '-' si no tiene segundo tipo o es NONE)
       const typeContainer = document.getElementById('res-types');
       const t1 = translateType(selectedPokemon.types[0]);
       const t2 = selectedPokemon.types[1] ? translateType(selectedPokemon.types[1]) : '-';
@@ -711,7 +730,6 @@
       });
     });
 
-    // Sincronización Sliders + Inputs Numéricos
     ['atk', 'def', 'sta'].forEach(stat => {
       const slider = document.getElementById(`iv-${stat}`);
       const numInput = document.getElementById(`num-${stat}`);
@@ -745,30 +763,28 @@
       calculateRankings();
     }
 
-    // CÁLCULO PRECISO DE STAT PRODUCT OFICIAL DE NIANTIC
+    // CÁLCULO PRECISO Y RIGUROSO DEL NIVEL MÁXIMO POSIBLE POR DEBAJO DEL LÍMITE DE PC
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
-      let best = { level: 1.0, cp: 10, product: 0, cpm: CPM_MAP[1.0] };
-      const levels = Object.keys(CPM_MAP).map(Number).sort((a,b) => a - b);
+      let best = { level: 1.0, cp: 10, product: 0, cpm: CPM_STEPS[0].cpm };
 
-      for (let lvl of levels) {
-        if (lvl > 50.0) continue; // Límite de nivel 50 estándar
-        const cpm = CPM_MAP[lvl];
-        const cp = calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, cpm);
+      for (let i = 0; i < CPM_STEPS.length; i++) {
+        const step = CPM_STEPS[i];
+        const cp = calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, step.cpm);
         
         if (cp <= maxCp) {
-          const atk = (baseAtk + ivA) * cpm;
-          const def = (baseDef + ivD) * cpm;
-          const hp = Math.floor((baseSta + ivS) * cpm); // Suelo oficial de Niantic
+          const atk = (baseAtk + ivA) * step.cpm;
+          const def = (baseDef + ivD) * step.cpm;
+          const hp = Math.floor((baseSta + ivS) * step.cpm); // Floor estricto de PS oficial
           const product = atk * def * hp;
-          best = { level: lvl, cp, product, cpm };
+          best = { level: step.lvl, cp, product, cpm: step.cpm };
         } else {
-          break;
+          break; // Superó el límite de la liga
         }
       }
       return best;
     }
 
-    // CÁLCULO Y ORDENACIÓN EXACTA DEL RANKING (4,096 COMBINACIONES)
+    // CALCULAR Y ORDENAR LAS 4096 COMBINACIONES
     function calculateRankings() {
       if (!selectedPokemon) return;
 
@@ -795,7 +811,7 @@
         }
       }
 
-      // Ordenar por Stat Product descendente
+      // Orden descendente por Stat Product exacto
       allCombos.sort((x, y) => y.product - x.product);
 
       const maxProduct = allCombos[0].product || 1;
@@ -817,7 +833,7 @@
       rankEl.innerText = `#${userRank}`;
 
       document.getElementById('res-cp').innerText = userResult.cp;
-      document.getElementById('res-level').innerText = `Nv. ${userResult.level}`;
+      document.getElementById('res-level').innerText = `Nv. ${userResult.level.toFixed(1)}`;
       document.getElementById('res-product').innerText = Math.round(userResult.product / 1000) + 'k';
       document.getElementById('res-percent').innerText = `${userResult.percent}%`;
 
@@ -827,7 +843,7 @@
         <tr class="hover:bg-slate-800/40 transition cursor-pointer ${item.rank === userRank ? 'bg-blue-500/10 text-blue-300 font-bold' : ''}" onclick="setSliders(${item.a}, ${item.d}, ${item.s})">
           <td class="p-2.5">#${item.rank}</td>
           <td class="p-2.5">${item.a}/${item.d}/${item.s}</td>
-          <td class="p-2.5">${item.level}</td>
+          <td class="p-2.5">${item.level.toFixed(1)}</td>
           <td class="p-2.5">${item.cp}</td>
           <td class="p-2.5">${Math.round(item.product).toLocaleString()}</td>
           <td class="p-2.5 text-cyan-400">${item.percent}%</td>
