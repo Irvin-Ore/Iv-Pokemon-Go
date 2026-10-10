@@ -52,7 +52,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones</p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(v3.0 - Motor IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -64,7 +64,7 @@
     </div>
   </header>
 
-  <!-- BANNER DE ARCHIVO LOCAL -->
+  <!-- BANNER LOCAL FILE:// -->
   <div id="local-cors-alert" class="hidden bg-amber-950/70 border-b border-amber-600/40 p-4 text-xs text-amber-200">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
@@ -298,7 +298,7 @@
   </main>
 
   <script>
-    // TABLA OFICIAL Y COMPLETA DE CPM DE NIANTIC (Niveles 1.0 a 51.0 con incrementos de 0.5)
+    // TABLA OFICIAL Y COMPLETA DE CPM DE NIANTIC (1.0 a 51.0)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -877,7 +877,6 @@
         }
       });
 
-      // Si los IVs seleccionados están por debajo del piso de intercambio actual
       if (!userResult) {
         userResult = getBestStats(base.atk, base.def, base.sta, currentA, currentD, currentS, maxCp, allowBuddy);
         userResult.percent = ((userResult.product / maxProduct) * 100).toFixed(2);
@@ -894,7 +893,6 @@
       document.getElementById('res-product').innerText = Math.round(userResult.product).toLocaleString();
       document.getElementById('res-percent').innerText = `${userResult.percent}%`;
 
-      // Desglose de estadísticas reales
       document.getElementById('res-real-atk').innerText = userResult.realAtk.toFixed(2);
       document.getElementById('res-real-def').innerText = userResult.realDef.toFixed(2);
       document.getElementById('res-real-hp').innerText = userResult.realHp;
