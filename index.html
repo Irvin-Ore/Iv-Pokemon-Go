@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Stats 9% Nerf Niantic / IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Fórmula 100% Calibrada IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -292,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA CPM OFICIAL DE NIANTIC
+    // TABLA EXACTA DE CPM (Nivel 1 al 40 de Niantic + Nivel 40 al 51 idéntico a IV4U con 0.840300 al Nv. 50)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -333,18 +333,18 @@
       { lvl: 37.0, cpm: 0.7731865 },  { lvl: 37.5, cpm: 0.776064964 },
       { lvl: 38.0, cpm: 0.77893275 }, { lvl: 38.5, cpm: 0.781790054 },
       { lvl: 39.0, cpm: 0.78463697 }, { lvl: 39.5, cpm: 0.787473574 },
-      { lvl: 40.0, cpm: 0.79030001 }, { lvl: 40.5, cpm: 0.7931164 },
-      { lvl: 41.0, cpm: 0.79592283 }, { lvl: 41.5, cpm: 0.79871939 },
-      { lvl: 42.0, cpm: 0.80150616 }, { lvl: 42.5, cpm: 0.80428325 },
-      { lvl: 43.0, cpm: 0.80705076 }, { lvl: 43.5, cpm: 0.8098088 },
-      { lvl: 44.0, cpm: 0.81255747 }, { lvl: 44.5, cpm: 0.81529688 },
-      { lvl: 45.0, cpm: 0.81802715 }, { lvl: 45.5, cpm: 0.82074838 },
-      { lvl: 46.0, cpm: 0.82346069 }, { lvl: 46.5, cpm: 0.82616418 },
-      { lvl: 47.0, cpm: 0.82885896 }, { lvl: 47.5, cpm: 0.83154515 },
-      { lvl: 48.0, cpm: 0.83422285 }, { lvl: 48.5, cpm: 0.83689218 },
-      { lvl: 49.0, cpm: 0.83955325 }, { lvl: 49.5, cpm: 0.84220616 },
-      { lvl: 50.0, cpm: 0.844851 },   { lvl: 50.5, cpm: 0.84748784 },
-      { lvl: 51.0, cpm: 0.85011684 }
+      { lvl: 40.0, cpm: 0.790300 },   { lvl: 40.5, cpm: 0.792800 },
+      { lvl: 41.0, cpm: 0.795300 },   { lvl: 41.5, cpm: 0.797800 },
+      { lvl: 42.0, cpm: 0.800300 },   { lvl: 42.5, cpm: 0.802800 },
+      { lvl: 43.0, cpm: 0.805300 },   { lvl: 43.5, cpm: 0.807800 },
+      { lvl: 44.0, cpm: 0.810300 },   { lvl: 44.5, cpm: 0.812800 },
+      { lvl: 45.0, cpm: 0.815300 },   { lvl: 45.5, cpm: 0.817800 },
+      { lvl: 46.0, cpm: 0.820300 },   { lvl: 46.5, cpm: 0.822800 },
+      { lvl: 47.0, cpm: 0.825300 },   { lvl: 47.5, cpm: 0.827800 },
+      { lvl: 48.0, cpm: 0.830300 },   { lvl: 48.5, cpm: 0.832800 },
+      { lvl: 49.0, cpm: 0.835300 },   { lvl: 49.5, cpm: 0.837800 },
+      { lvl: 50.0, cpm: 0.840300 },   { lvl: 50.5, cpm: 0.842800 },
+      { lvl: 51.0, cpm: 0.845300 }
     ];
 
     const TYPES_ES_MAP = {
@@ -434,7 +434,6 @@
       if (!name) return '-';
       let n = name;
 
-      // Necrozma
       if (/necrozma_dawn_wings/i.test(speciesId) || /dawn wings/i.test(n)) {
         return 'Necrozma (Alas del Alba)';
       }
@@ -445,7 +444,6 @@
         return 'Ultra Necrozma';
       }
 
-      // Zacian y Zamazenta
       if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) return 'Zacian (Guerrero Avezado)';
       if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) return 'Zacian (Espada Suprema)';
       if (/crowned_shield/i.test(speciesId) || /crowned shield/i.test(n)) return 'Zamazenta (Escudo Supremo)';
@@ -499,6 +497,7 @@
     }
 
     function processRawData(rawData) {
+      // Excluir formas oscuras para que no existan cruces
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -509,19 +508,10 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        let atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
-        let defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
-        let staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
-
-        // REGLA OFICIAL DE NIANTIC: 9% NERF PARA LEGENDARIOS QUE SUPEREN 4000 CP A NIVEL 40
-        // (Aplica a Necrozma Dawn Wings/Dusk Mane, Kyogre, Groudon, Dialga, Palkia, etc.)
-        const cpm40 = 0.79030001;
-        const maxCpLvl40Raw = Math.floor(((atkVal + 15) * Math.sqrt(defVal + 15) * Math.sqrt(staVal + 15) * Math.pow(cpm40, 2)) / 10);
-        if (maxCpLvl40Raw > 4000 && !p.speciesId.includes('_mega')) {
-          atkVal = Math.round(atkVal * 0.91);
-          defVal = Math.round(defVal * 0.91);
-          staVal = Math.round(staVal * 0.91);
-        }
+        // Usamos los stats nativos tal como vienen en el Game Master de Niantic (sin nerfeos artificiales extra)
+        const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
+        const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
+        const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
 
         return {
           dex: p.dex || 0,
@@ -653,7 +643,7 @@
       const container = document.getElementById('evolution-container');
       if (!selectedPokemon) return;
 
-      // Filtrar sólo formas de la misma especie exacta para evitar que salgan otros legendarios
+      // Filtrar únicamente variantes de la misma especie (mismo número de Pokédex)
       let relatives = [];
       if (selectedPokemon.dex) {
         relatives = pokemonDatabase.filter(p => p.dex === selectedPokemon.dex);
