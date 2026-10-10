@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PokeIV - Master - IV - PVP Ranks & Evoluciones</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -52,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(v3.0 - Motor IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Sin Oscuros - Precisión Niantic)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -117,9 +115,8 @@
           </div>
         </div>
 
-        <!-- OPCIONES AVANZADAS DE AMISTAD (IV4U COMPATIBLE) -->
+        <!-- OPCIONES AVANZADAS DE AMISTAD -->
         <div class="pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <!-- Toggle Mejor Compañero (+1 Nivel) -->
           <div class="flex items-center justify-between bg-slate-950 border border-slate-800 p-2.5 rounded-xl">
             <div class="flex items-center gap-2">
               <i data-lucide="medal" class="w-4 h-4 text-amber-400"></i>
@@ -131,7 +128,6 @@
             </label>
           </div>
 
-          <!-- Selector Piso de Amistad / Intercambios -->
           <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex items-center justify-between">
             <span class="font-semibold text-slate-300">Piso de IVs:</span>
             <select id="select-friendship-floor" class="bg-slate-900 border border-slate-700 rounded-lg text-slate-200 text-xs py-1 px-2 focus:outline-none focus:border-blue-500">
@@ -146,7 +142,7 @@
           </div>
         </div>
 
-        <!-- Cadena Evolutiva -->
+        <!-- Cadena Evolutiva (Sin Oscuros) -->
         <div class="pt-3 border-t border-slate-800/80 space-y-2">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
             <i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -229,7 +225,6 @@
           </div>
         </div>
 
-        <!-- STATS EFECTIVOS DE COMBATE (ESTILO IV4U) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
           <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
             <span class="text-[10px] text-slate-400 uppercase font-semibold">PC Final</span>
@@ -249,7 +244,6 @@
           </div>
         </div>
 
-        <!-- DESGLOSE DE ESTADÍSTICAS REALES EN COMBATE -->
         <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-800/80 text-center text-xs">
           <div class="bg-slate-950/50 p-2 rounded-lg border border-slate-800/50">
             <span class="text-[10px] text-slate-400 block font-semibold">Ataque Real</span>
@@ -298,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA OFICIAL Y COMPLETA DE CPM DE NIANTIC (1.0 a 51.0)
+    // TABLA CPM OFICIAL DE NIANTIC
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -455,9 +449,6 @@
              .replace(/\(Steel\)/i, '(Acero)').replace(/\(Dark\)/i, '(Siniestro)').replace(/\(Fairy\)/i, '(Hada)');
       }
 
-      if (/\(Shadow\)/i.test(n)) n = n.replace(/\(Shadow\)/i, '').trim() + ' oscuro';
-      else if (n.toLowerCase().endsWith('_shadow')) n = n.replace(/_shadow/i, '').trim() + ' oscuro';
-
       if (/\(Primal\)/i.test(n)) n = n.replace(/\(Primal\)/i, '').trim() + ' primigenio';
       else if (n.toLowerCase().startsWith('primal ')) n = n.replace(/primal\s+/i, '').trim() + ' primigenio';
 
@@ -472,13 +463,15 @@
       return n;
     }
 
-    // FÓRMULA OFICIAL DE CP DE NIANTIC
+    // FÓRMULA OFICIAL DE CP DE NIANTIC CON PREVENCIÓN DE ERROR DE COMA FLOTANTE
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
       const sta = baseSta + ivSta;
-      const cp = Math.floor((atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(cpm, 2)) / 10);
-      return Math.max(10, cp);
+      // Truncado exacto
+      const rawCP = (atk * Math.sqrt(def) * Math.sqrt(sta) * Math.pow(cpm, 2)) / 10;
+      // Previene que 2500.000000001 sea 2501
+      return Math.max(10, Math.floor(rawCP + 0.00000001));
     }
 
     async function loadDatabase() {
@@ -497,11 +490,17 @@
     }
 
     function processRawData(rawData) {
-      pokemonDatabase = rawData.map(p => {
+      // FILTRAR TOTALMENTE LAS FORMAS OSCURAS (SHADOW) PARA EVITAR CRUCES
+      const cleanData = rawData.filter(p => {
+        const id = (p.speciesId || '').toLowerCase();
+        const name = (p.speciesName || p.name || '').toLowerCase();
+        return !id.endsWith('_shadow') && !id.includes('_shadow_') && !name.includes('(shadow)');
+      });
+
+      pokemonDatabase = cleanData.map(p => {
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        // Extracción exacta de stats base
         const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
         const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
         const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
@@ -525,7 +524,7 @@
 
       const statusBadge = document.getElementById('db-status-badge');
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 font-medium';
-      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos`;
+      statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${pokemonDatabase.length} Pokémon listos (Sin Oscuros)`;
 
       const charizard = pokemonDatabase.find(p => p.speciesId === 'charizard');
       if (charizard) {
@@ -747,11 +746,9 @@
       });
     });
 
-    // Eventos de opciones de Amistad
     document.getElementById('check-buddy').addEventListener('change', calculateRankings);
     document.getElementById('select-friendship-floor').addEventListener('change', calculateRankings);
 
-    // Sincronización Sliders + Inputs
     ['atk', 'def', 'sta'].forEach(stat => {
       const slider = document.getElementById(`iv-${stat}`);
       const numInput = document.getElementById(`num-${stat}`);
@@ -785,7 +782,7 @@
       calculateRankings();
     }
 
-    // CÁLCULO DE MEJOR NIVEL CON SOPORTE PARA MEJOR COMPAÑERO (+1 Nivel)
+    // CÁLCULO PRECISO DE MEJOR NIVEL
     function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
       const maxLevel = allowBuddy ? 51.0 : 50.0;
       let best = { 
@@ -807,9 +804,8 @@
         if (cp <= maxCp) {
           const atk = (baseAtk + ivA) * step.cpm;
           const def = (baseDef + ivD) * step.cpm;
-          const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm));
+          const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm + 0.0000001));
           
-          // FÓRMULA OFICIAL DE STAT PRODUCT DE IV4U
           const product = atk * def * hp;
           best = { 
             level: step.lvl, 
@@ -827,7 +823,7 @@
       return best;
     }
 
-    // CALCULAR Y ORDENAR COMBINACIONES SEGÚN EL PISO DE AMISTAD
+    // CALCULAR Y ORDENAR COMBINACIONES
     function calculateRankings() {
       if (!selectedPokemon) return;
 
@@ -859,7 +855,6 @@
         }
       }
 
-      // Ordenar por Stat Product descendente
       allCombos.sort((x, y) => y.product - x.product);
 
       document.getElementById('combos-count-label').innerText = `De ${allCombos.length.toLocaleString()} combinaciones`;
