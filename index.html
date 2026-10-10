@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PokeIV - Master - IV - PVP Ranks & Evoluciones</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
@@ -62,7 +64,7 @@
     </div>
   </header>
 
-  <!-- BANNER FILE:// -->
+  <!-- BANNER DE ARCHIVO LOCAL -->
   <div id="local-cors-alert" class="hidden bg-amber-950/70 border-b border-amber-600/40 p-4 text-xs text-amber-200">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
@@ -84,7 +86,7 @@
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
-        <!-- Búsqueda -->
+        <!-- Búsqueda con Dropdown y Miniaturas -->
         <div class="relative">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Buscar y Seleccionar Pokémon</label>
           <div class="relative">
@@ -96,7 +98,7 @@
           <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto divide-y divide-slate-800"></div>
         </div>
 
-        <!-- Liga PvP -->
+        <!-- Selector de Liga -->
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
@@ -112,6 +114,35 @@
               <span>Master Ball</span>
               <span class="text-[10px] font-normal text-slate-500">Sin límite</span>
             </button>
+          </div>
+        </div>
+
+        <!-- OPCIONES AVANZADAS DE AMISTAD (IV4U COMPATIBLE) -->
+        <div class="pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Toggle Mejor Compañero (+1 Nivel) -->
+          <div class="flex items-center justify-between bg-slate-950 border border-slate-800 p-2.5 rounded-xl">
+            <div class="flex items-center gap-2">
+              <i data-lucide="medal" class="w-4 h-4 text-amber-400"></i>
+              <span class="font-semibold text-slate-300">Mejor Compañero</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="check-buddy" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+
+          <!-- Selector Piso de Amistad / Intercambios -->
+          <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl flex items-center justify-between">
+            <span class="font-semibold text-slate-300">Piso de IVs:</span>
+            <select id="select-friendship-floor" class="bg-slate-900 border border-slate-700 rounded-lg text-slate-200 text-xs py-1 px-2 focus:outline-none focus:border-blue-500">
+              <option value="0">Salvaje (0/0/0)</option>
+              <option value="1">Buen amigo (1/1/1)</option>
+              <option value="2">Gran amigo (2/2/2)</option>
+              <option value="3">Ultra amigo (3/3/3)</option>
+              <option value="5">Mejor amigo (5/5/5)</option>
+              <option value="10">Incursión/Huevo (10/10/10)</option>
+              <option value="12">Con suerte (12/12/12)</option>
+            </select>
           </div>
         </div>
 
@@ -198,6 +229,7 @@
           </div>
         </div>
 
+        <!-- STATS EFECTIVOS DE COMBATE (ESTILO IV4U) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
           <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-3">
             <span class="text-[10px] text-slate-400 uppercase font-semibold">PC Final</span>
@@ -216,13 +248,29 @@
             <p id="res-percent" class="text-lg font-bold text-cyan-400 mt-0.5">--%</p>
           </div>
         </div>
+
+        <!-- DESGLOSE DE ESTADÍSTICAS REALES EN COMBATE -->
+        <div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-800/80 text-center text-xs">
+          <div class="bg-slate-950/50 p-2 rounded-lg border border-slate-800/50">
+            <span class="text-[10px] text-slate-400 block font-semibold">Ataque Real</span>
+            <span id="res-real-atk" class="font-bold text-red-300">--</span>
+          </div>
+          <div class="bg-slate-950/50 p-2 rounded-lg border border-slate-800/50">
+            <span class="text-[10px] text-slate-400 block font-semibold">Defensa Real</span>
+            <span id="res-real-def" class="font-bold text-blue-300">--</span>
+          </div>
+          <div class="bg-slate-950/50 p-2 rounded-lg border border-slate-800/50">
+            <span class="text-[10px] text-slate-400 block font-semibold">PS Real (HP)</span>
+            <span id="res-real-hp" class="font-bold text-emerald-300">--</span>
+          </div>
+        </div>
       </div>
 
       <!-- TABLA TOP COMBINACIONES -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         <div class="flex justify-between items-center mb-3">
           <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Top Combinaciones IVs</h3>
-          <span class="text-[11px] text-slate-500">De 4,096 combinaciones</span>
+          <span id="combos-count-label" class="text-[11px] text-slate-500">De 4,096 combinaciones</span>
         </div>
         <div class="overflow-x-auto max-h-[360px] overflow-y-auto rounded-xl border border-slate-800">
           <table class="w-full text-left text-xs text-slate-300">
@@ -250,7 +298,7 @@
   </main>
 
   <script>
-    // MATRIZ OFICIAL CPM DE NIANTIC (1.0 a 50.0)
+    // TABLA OFICIAL Y COMPLETA DE CPM DE NIANTIC (Niveles 1.0 a 51.0 con incrementos de 0.5)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -301,7 +349,8 @@
       { lvl: 47.0, cpm: 0.83824008 }, { lvl: 47.5, cpm: 0.84127529 },
       { lvl: 48.0, cpm: 0.8443105 }, { lvl: 48.5, cpm: 0.84734571 },
       { lvl: 49.0, cpm: 0.85038092 }, { lvl: 49.5, cpm: 0.85341613 },
-      { lvl: 50.0, cpm: 0.85645134 }
+      { lvl: 50.0, cpm: 0.85645134 }, { lvl: 50.5, cpm: 0.85948655 },
+      { lvl: 51.0, cpm: 0.86252176 }
     ];
 
     const TYPES_ES_MAP = {
@@ -452,7 +501,7 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        // CORRECCIÓN CRÍTICA: PvPoke usa .hp o .sta indistintamente
+        // Extracción exacta de stats base
         const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
         const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
         const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
@@ -698,6 +747,11 @@
       });
     });
 
+    // Eventos de opciones de Amistad
+    document.getElementById('check-buddy').addEventListener('change', calculateRankings);
+    document.getElementById('select-friendship-floor').addEventListener('change', calculateRankings);
+
+    // Sincronización Sliders + Inputs
     ['atk', 'def', 'sta'].forEach(stat => {
       const slider = document.getElementById(`iv-${stat}`);
       const numInput = document.getElementById(`num-${stat}`);
@@ -731,21 +785,41 @@
       calculateRankings();
     }
 
-    // CÁLCULO OFICIAL ESTÁNDAR DE IV4U Y PVPOKE
-    function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp) {
-      let best = { level: 1.0, cp: 10, product: 0, cpm: CPM_STEPS[0].cpm };
+    // CÁLCULO DE MEJOR NIVEL CON SOPORTE PARA MEJOR COMPAÑERO (+1 Nivel)
+    function getBestStats(baseAtk, baseDef, baseSta, ivA, ivD, ivS, maxCp, allowBuddy) {
+      const maxLevel = allowBuddy ? 51.0 : 50.0;
+      let best = { 
+        level: 1.0, 
+        cp: 10, 
+        product: 0, 
+        cpm: CPM_STEPS[0].cpm,
+        realAtk: 0,
+        realDef: 0,
+        realHp: 10
+      };
 
       for (let i = 0; i < CPM_STEPS.length; i++) {
         const step = CPM_STEPS[i];
+        if (step.lvl > maxLevel) break;
+
         const cp = calculateCP(baseAtk, baseDef, baseSta, ivA, ivD, ivS, step.cpm);
         
         if (cp <= maxCp) {
           const atk = (baseAtk + ivA) * step.cpm;
           const def = (baseDef + ivD) * step.cpm;
-          const hp = Math.floor((baseSta + ivS) * step.cpm);
-          // Fórmula oficial de Stat Product
+          const hp = Math.max(10, Math.floor((baseSta + ivS) * step.cpm));
+          
+          // FÓRMULA OFICIAL DE STAT PRODUCT DE IV4U
           const product = atk * def * hp;
-          best = { level: step.lvl, cp, product, cpm: step.cpm };
+          best = { 
+            level: step.lvl, 
+            cp: cp, 
+            product: product, 
+            cpm: step.cpm,
+            realAtk: atk,
+            realDef: def,
+            realHp: hp
+          };
         } else {
           break;
         }
@@ -753,11 +827,14 @@
       return best;
     }
 
+    // CALCULAR Y ORDENAR COMBINACIONES SEGÚN EL PISO DE AMISTAD
     function calculateRankings() {
       if (!selectedPokemon) return;
 
       const base = selectedPokemon.baseStats;
       const maxCp = LEAGUE_CAPS[selectedLeague];
+      const allowBuddy = document.getElementById('check-buddy').checked;
+      const floor = parseInt(document.getElementById('select-friendship-floor').value);
 
       const currentA = parseInt(document.getElementById('iv-atk').value);
       const currentD = parseInt(document.getElementById('iv-def').value);
@@ -765,24 +842,30 @@
 
       const allCombos = [];
 
-      for (let a = 0; a <= 15; a++) {
-        for (let d = 0; d <= 15; d++) {
-          for (let s = 0; s <= 15; s++) {
-            const res = getBestStats(base.atk, base.def, base.sta, a, d, s, maxCp);
+      for (let a = floor; a <= 15; a++) {
+        for (let d = floor; d <= 15; d++) {
+          for (let s = floor; s <= 15; s++) {
+            const res = getBestStats(base.atk, base.def, base.sta, a, d, s, maxCp, allowBuddy);
             allCombos.push({
               a, d, s,
               level: res.level,
               cp: res.cp,
-              product: res.product
+              product: res.product,
+              realAtk: res.realAtk,
+              realDef: res.realDef,
+              realHp: res.realHp
             });
           }
         }
       }
 
+      // Ordenar por Stat Product descendente
       allCombos.sort((x, y) => y.product - x.product);
 
-      const maxProduct = allCombos[0].product || 1;
-      let userRank = 1;
+      document.getElementById('combos-count-label').innerText = `De ${allCombos.length.toLocaleString()} combinaciones`;
+
+      const maxProduct = allCombos.length > 0 ? (allCombos[0].product || 1) : 1;
+      let userRank = '-';
       let userResult = null;
 
       allCombos.forEach((item, index) => {
@@ -794,15 +877,27 @@
         }
       });
 
+      // Si los IVs seleccionados están por debajo del piso de intercambio actual
+      if (!userResult) {
+        userResult = getBestStats(base.atk, base.def, base.sta, currentA, currentD, currentS, maxCp, allowBuddy);
+        userResult.percent = ((userResult.product / maxProduct) * 100).toFixed(2);
+        userRank = 'Fuera del piso';
+      }
+
       const rankColor = selectedLeague === 'great' ? 'text-blue-400' : (selectedLeague === 'ultra' ? 'text-amber-400' : 'text-purple-400');
       const rankEl = document.getElementById('res-rank');
       rankEl.className = `text-3xl font-black ${rankColor}`;
-      rankEl.innerText = `#${userRank}`;
+      rankEl.innerText = typeof userRank === 'number' ? `#${userRank}` : userRank;
 
       document.getElementById('res-cp').innerText = userResult.cp;
       document.getElementById('res-level').innerText = `Nv. ${userResult.level.toFixed(1)}`;
-      document.getElementById('res-product').innerText = Math.round(userResult.product / 1000) + 'k';
+      document.getElementById('res-product').innerText = Math.round(userResult.product).toLocaleString();
       document.getElementById('res-percent').innerText = `${userResult.percent}%`;
+
+      // Desglose de estadísticas reales
+      document.getElementById('res-real-atk').innerText = userResult.realAtk.toFixed(2);
+      document.getElementById('res-real-def').innerText = userResult.realDef.toFixed(2);
+      document.getElementById('res-real-hp').innerText = userResult.realHp;
 
       const top10 = allCombos.slice(0, 10);
       const tbody = document.getElementById('top-ranks-body');
