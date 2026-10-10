@@ -50,7 +50,7 @@
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
             PokeIV - <span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Fórmula 100% Calibrada IV4U)</span></p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones <span class="text-emerald-400 font-bold ml-1">(Motor Universal IV4U)</span></p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -104,13 +104,13 @@
               <span>Super Ball</span>
               <span class="text-[10px] font-normal text-slate-500">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="ultra" class="league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Ultra Ball</span>
-              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
+              <span class="text-[10px] font-normal text-amber-300">2500 PC</span>
             </button>
-            <button data-league="master" class="league-btn active py-2 px-2 rounded-xl border border-purple-500 bg-purple-500/20 text-purple-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+            <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
               <span>Master Ball</span>
-              <span class="text-[10px] font-normal text-purple-300">Sin límite</span>
+              <span class="text-[10px] font-normal text-slate-500">Sin límite</span>
             </button>
           </div>
         </div>
@@ -167,20 +167,20 @@
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-red-400">Ataque</span>
-              <input type="number" id="num-atk" min="0" max="15" value="15"
+              <input type="number" id="num-atk" min="0" max="15" value="0"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-red-400 py-1 focus:outline-none focus:border-red-500">
             </div>
-            <input type="range" id="iv-atk" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-atk" min="0" max="15" value="0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- Defensa -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-bold text-blue-400">Defensa</span>
-              <input type="number" id="num-def" min="0" max="15" value="15"
+              <input type="number" id="num-def" min="0" max="15" value="13"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-blue-400 py-1 focus:outline-none focus:border-blue-500">
             </div>
-            <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+            <input type="range" id="iv-def" min="0" max="15" value="13" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
           <!-- PS -->
@@ -221,7 +221,7 @@
           </div>
           <div class="text-right shrink-0">
             <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400">Rango PvP</span>
-            <div id="res-rank" class="text-3xl font-black text-purple-400">#--</div>
+            <div id="res-rank" class="text-3xl font-black text-amber-400">#--</div>
           </div>
         </div>
 
@@ -292,7 +292,7 @@
   </main>
 
   <script>
-    // TABLA EXACTA DE CPM (Nivel 1 al 40 de Niantic + Nivel 40 al 51 idéntico a IV4U con 0.840300 al Nv. 50)
+    // TABLA CPM OFICIAL (Nivel 1 al 40 de Niantic + Nivel 40 al 51 idéntico a IV4U: 0.840300 al Nv. 50 y 0.845300 al Nv. 51)
     const CPM_STEPS = [
       { lvl: 1.0, cpm: 0.094 }, { lvl: 1.5, cpm: 0.135137432 },
       { lvl: 2.0, cpm: 0.16639787 }, { lvl: 2.5, cpm: 0.192650919 },
@@ -417,7 +417,7 @@
 
     let pokemonDatabase = [];
     let selectedPokemon = null;
-    let selectedLeague = 'master';
+    let selectedLeague = 'ultra';
 
     const LEAGUE_CAPS = {
       great: 1500,
@@ -434,15 +434,9 @@
       if (!name) return '-';
       let n = name;
 
-      if (/necrozma_dawn_wings/i.test(speciesId) || /dawn wings/i.test(n)) {
-        return 'Necrozma (Alas del Alba)';
-      }
-      if (/necrozma_dusk_mane/i.test(speciesId) || /dusk mane/i.test(n)) {
-        return 'Necrozma (Melena Crepuscular)';
-      }
-      if (/necrozma_ultra/i.test(speciesId) || /necrozma ultra/i.test(n)) {
-        return 'Ultra Necrozma';
-      }
+      if (/necrozma_dawn_wings/i.test(speciesId) || /dawn wings/i.test(n)) return 'Necrozma (Alas del Alba)';
+      if (/necrozma_dusk_mane/i.test(speciesId) || /dusk mane/i.test(n)) return 'Necrozma (Melena Crepuscular)';
+      if (/necrozma_ultra/i.test(speciesId) || /necrozma ultra/i.test(n)) return 'Ultra Necrozma';
 
       if (/hero_of_many_battles/i.test(speciesId) || /hero of many battles/i.test(n)) return 'Zacian (Guerrero Avezado)';
       if (/crowned_sword/i.test(speciesId) || /crowned sword/i.test(n)) return 'Zacian (Espada Suprema)';
@@ -497,7 +491,7 @@
     }
 
     function processRawData(rawData) {
-      // Excluir formas oscuras para que no existan cruces
+      // Excluir formas oscuras
       const cleanData = rawData.filter(p => {
         const id = (p.speciesId || '').toLowerCase();
         const name = (p.speciesName || p.name || '').toLowerCase();
@@ -508,7 +502,7 @@
         const rawName = p.speciesName || p.name || p.speciesId;
         const formattedName = formatSpecialName(rawName, p.speciesId);
 
-        // Usamos los stats nativos tal como vienen en el Game Master de Niantic (sin nerfeos artificiales extra)
+        // Se leen directamente los stats oficiales del JSON sin modificaciones artificiales
         const atkVal = p.baseStats ? (p.baseStats.atk || 100) : 100;
         const defVal = p.baseStats ? (p.baseStats.def || 100) : 100;
         const staVal = p.baseStats ? (p.baseStats.hp !== undefined ? p.baseStats.hp : (p.baseStats.sta || 100)) : 100;
@@ -643,7 +637,6 @@
       const container = document.getElementById('evolution-container');
       if (!selectedPokemon) return;
 
-      // Filtrar únicamente variantes de la misma especie (mismo número de Pokédex)
       let relatives = [];
       if (selectedPokemon.dex) {
         relatives = pokemonDatabase.filter(p => p.dex === selectedPokemon.dex);
