@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PokéIV Master - PvP Ranker & Evoluciones</title>
+  <title>PokeIV-Master - IV - PVP Ranks & Evoluciones</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -50,9 +50,9 @@
         </div>
         <div>
           <h1 class="font-bold text-lg leading-tight tracking-wide flex items-center gap-2">
-            PokéIV <span class="text-blue-400">Master</span>
+            PokeIV-<span class="text-blue-400">Master</span>
           </h1>
-          <p class="text-xs text-slate-400">PvP IV Ranker & Evoluciones</p>
+          <p class="text-xs text-slate-400">IV - PVP Ranks & Evoluciones</p>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs">
@@ -84,7 +84,7 @@
   <!-- CONTENIDO PRINCIPAL -->
   <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <!-- PANEL IZQUIERDO: SELECCIÓN, EVOLUCIONES & SLIDERS -->
+    <!-- PANEL IZQUIERDO: SELECCIÓN, LIGAS, EVOLUCIONES & SLIDERS -->
     <div class="lg:col-span-5 space-y-5">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         
@@ -100,26 +100,29 @@
           <div id="search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl z-50 max-h-60 overflow-y-auto divide-y divide-slate-800"></div>
         </div>
 
-        <!-- Selector de Liga -->
+        <!-- Selector de Liga con colores temáticos (Azul, Amarillo, Morado) -->
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Liga PvP</label>
           <div class="grid grid-cols-3 gap-2" id="league-buttons">
-            <button data-league="great" class="league-btn active py-2 px-3 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
-              <span>Súper (1500)</span>
-              <span class="text-[10px] font-normal text-blue-300">Great League</span>
+            <!-- Azul: Super Ball -->
+            <button data-league="great" class="league-btn active py-2 px-2 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Super Ball</span>
+              <span class="text-[10px] font-normal text-blue-300">1500 PC</span>
             </button>
-            <button data-league="ultra" class="league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5">
-              <span>Ultra (2500)</span>
-              <span class="text-[10px] font-normal text-slate-500">Ultra League</span>
+            <!-- Amarillo / Dorado: Ultra Ball -->
+            <button data-league="ultra" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-amber-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Ultra Ball</span>
+              <span class="text-[10px] font-normal text-slate-500">2500 PC</span>
             </button>
-            <button data-league="master" class="league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5">
-              <span>Máster (Sin lím.)</span>
-              <span class="text-[10px] font-normal text-slate-500">Master League</span>
+            <!-- Morado: Master Ball -->
+            <button data-league="master" class="league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-purple-500/50 text-xs font-bold transition flex flex-col items-center gap-0.5">
+              <span>Master Ball</span>
+              <span class="text-[10px] font-normal text-slate-500">Sin límite</span>
             </button>
           </div>
         </div>
 
-        <!-- REUBICACIÓN: CADENA EVOLUTIVA ANTES DE LOS IVs -->
+        <!-- Cadena Evolutiva antes de los IVs -->
         <div class="pt-3 border-t border-slate-800/80 space-y-2">
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
             <i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i>
@@ -130,10 +133,10 @@
           </div>
         </div>
 
-        <!-- SECCIÓN DE IVs (SLIDERS + INPUT NUMÉRICO) -->
+        <!-- SECCIÓN: BUSCAR IVs (Sliders + Input Numérico) -->
         <div class="pt-3 border-t border-slate-800/80 space-y-4">
           <div class="flex justify-between items-center">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Valores Individuales (IVs)</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">BUSCAR IVs</span>
             <div class="flex gap-1.5">
               <button id="preset-pvp" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">0/15/15</button>
               <button id="preset-hundo" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded transition">15/15/15</button>
@@ -160,10 +163,10 @@
             <input type="range" id="iv-def" min="0" max="15" value="15" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
           </div>
 
-          <!-- Stamina / Salud -->
+          <!-- PS (Antes Salud HP) -->
           <div class="space-y-1.5">
             <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-emerald-400">Salud (HP)</span>
+              <span class="text-xs font-bold text-emerald-400">PS</span>
               <input type="number" id="num-sta" min="0" max="15" value="15"
                 class="w-14 bg-slate-950 border border-slate-700 rounded-lg text-center text-xs font-bold text-emerald-400 py-1 focus:outline-none focus:border-emerald-500">
             </div>
@@ -173,11 +176,11 @@
 
       </div>
 
-      <!-- Tarjeta de ataques recomendados PvP (En Español España) -->
+      <!-- Tarjeta de ataques recomendados PvP -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
         <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
           <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
-          Ataques Recomendados PvP (Español España)
+          Ataques Recomendados PvP
         </h3>
         <div id="moveset-container" class="space-y-2 text-xs">
           <p class="text-slate-500 italic">Selecciona un Pokémon para ver sus movimientos.</p>
@@ -277,9 +280,23 @@
       48.5: 0.84734571, 49.0: 0.85038092, 49.5: 0.85341613, 50.0: 0.85645134, 50.5: 0.85948655, 51.0: 0.86252176
     };
 
-    // DICCIONARIO OFICIAL ESPAÑOL ESPAÑA PARA ATAQUES DE POKÉMON GO
+    // MAPA DE TIPOS OFICIALES
+    const TYPES_ES_MAP = {
+      "normal": "Normal", "fire": "Fuego", "water": "Agua", "grass": "Planta",
+      "electric": "Eléctrico", "ice": "Hielo", "fighting": "Lucha", "poison": "Veneno",
+      "ground": "Tierra", "flying": "Volador", "psychic": "Psíquico", "bug": "Bicho",
+      "rock": "Roca", "ghost": "Fantasma", "dragon": "Dragón", "steel": "Acero",
+      "dark": "Siniestro", "fairy": "Hada"
+    };
+
+    function translateType(t) {
+      if (!t) return '-';
+      const key = t.toLowerCase().trim();
+      return TYPES_ES_MAP[key] || t;
+    }
+
+    // MAPA DE MOVIMIENTOS OFICIALES
     const MOVES_ES_MAP = {
-      // Rápidos
       "MUD_SHOT": "Disparo Lodo", "VINE_WHIP": "Látigo Cepa", "COUNTER": "Contraataque",
       "SHADOW_CLAW": "Garra Umbría", "POWDER_SNOW": "Nieve Polvo", "LOCK_ON": "Fijar Blanco",
       "INCINERATE": "Calcinación", "DRAGON_BREATH": "Dragoaliento", "WATERFALL": "Cascada",
@@ -300,7 +317,6 @@
       "MAGICAL_LEAF": "Hoja Mágica", "QUICK_ATTACK": "Ataque Rápido", "TACKLE": "Placaje",
       "SCRATCH": "Arañazo", "PECK": "Picotazo", "ACID": "Ácido",
 
-      // Cargados
       "HYDRO_CANNON": "Hidrocañón", "FRENZY_PLANT": "Planta Feroz", "BLAST_BURN": "Anillo Ígneo",
       "EARTHQUAKE": "Terremoto", "ICE_BEAM": "Rayo Hielo", "SURF": "Surf",
       "BLIZZARD": "Ventisca", "WEATHER_BALL": "Meteorobola", "HYDRO_PUMP": "Hidrobomba",
@@ -328,17 +344,11 @@
       "HYPER_BEAM": "Híper Rayo", "TRI_ATTACK": "Triataque", "SKULL_BASH": "Cabezazo"
     };
 
-    // Función que traduce y embellece nombres de ataques al Español España oficial
     function translateMove(moveStr) {
       if (!moveStr) return '';
       const key = moveStr.toUpperCase().trim().replace(/[\s-]+/g, '_');
       if (MOVES_ES_MAP[key]) return MOVES_ES_MAP[key];
-
-      // Formato legible por defecto si no está en el mapa
-      return moveStr
-        .replace(/_/g, ' ')
-        .toLowerCase()
-        .replace(/\b\w/g, l => l.toUpperCase());
+      return moveStr.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
     }
 
     let pokemonDatabase = [];
@@ -351,25 +361,39 @@
       master: 10000
     };
 
-    // Formatear nombres colocando "Mega" al inicio
-    function formatMegaName(name) {
+    // Formatear Nombres: Mega adelante, Shadow a Oscuro, Primal a Primigenio
+    function formatSpecialName(name) {
       if (!name) return '';
-      if (/\(Mega\s*X\)/i.test(name)) {
-        return `Mega ${name.replace(/\(Mega\s*X\)/i, '').trim()} X`;
+      let n = name;
+
+      // Traducir Shadow / Sombra a Oscuro
+      if (/\(Shadow\)/i.test(n)) {
+        n = n.replace(/\(Shadow\)/i, '').trim() + ' oscuro';
+      } else if (n.toLowerCase().endsWith('_shadow')) {
+        n = n.replace(/_shadow/i, '').trim() + ' oscuro';
       }
-      if (/\(Mega\s*Y\)/i.test(name)) {
-        return `Mega ${name.replace(/\(Mega\s*Y\)/i, '').trim()} Y`;
+
+      // Traducir Primal a Primigenio
+      if (/\(Primal\)/i.test(n)) {
+        n = n.replace(/\(Primal\)/i, '').trim() + ' primigenio';
+      } else if (n.toLowerCase().startsWith('primal ')) {
+        n = n.replace(/primal\s+/i, '').trim() + ' primigenio';
       }
-      if (/\(Mega\)/i.test(name)) {
-        return `Mega ${name.replace(/\(Mega\)/i, '').trim()}`;
+
+      // Mega adelante
+      if (/\(Mega\s*X\)/i.test(n)) {
+        n = `Mega ${n.replace(/\(Mega\s*X\)/i, '').trim()} X`;
+      } else if (/\(Mega\s*Y\)/i.test(n)) {
+        n = `Mega ${n.replace(/\(Mega\s*Y\)/i, '').trim()} Y`;
+      } else if (/\(Mega\)/i.test(n)) {
+        n = `Mega ${n.replace(/\(Mega\)/i, '').trim()}`;
+      } else if (n.toLowerCase().endsWith(' mega')) {
+        n = `Mega ${n.slice(0, -5).trim()}`;
       }
-      if (name.toLowerCase().endsWith(' mega')) {
-        return `Mega ${name.slice(0, -5).trim()}`;
-      }
-      return name;
+
+      return n;
     }
 
-    // Fórmula oficial de PC en Pokémon GO
     function calculateCP(baseAtk, baseDef, baseSta, ivAtk, ivDef, ivSta, cpm) {
       const atk = baseAtk + ivAtk;
       const def = baseDef + ivDef;
@@ -378,27 +402,25 @@
       return Math.max(10, cp);
     }
 
-    // Carga de datos
     async function loadDatabase() {
       const statusBadge = document.getElementById('db-status-badge');
       try {
         const res = await fetch('pokemon.json');
-        if (!res.ok) throw new Error('No se pudo cargar pokemon.json directamente');
+        if (!res.ok) throw new Error('No se pudo cargar pokemon.json');
         const rawData = await res.json();
         processRawData(rawData);
       } catch (err) {
-        console.warn('Fetch falló (normal en protocolos locales file://):', err);
+        console.warn('Fetch falló:', err);
         document.getElementById('local-cors-alert').classList.remove('hidden');
         statusBadge.className = 'px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center gap-1.5 font-medium';
         statusBadge.innerHTML = '<span>⚠️ Sube tu pokemon.json</span>';
       }
     }
 
-    // Procesar y normalizar base de datos
     function processRawData(rawData) {
       pokemonDatabase = rawData.map(p => {
         const rawName = p.speciesName || p.name || p.speciesId;
-        const formattedName = formatMegaName(rawName);
+        const formattedName = formatSpecialName(rawName);
 
         return {
           dex: p.dex || 0,
@@ -449,17 +471,21 @@
         return;
       }
 
-      searchDropdown.innerHTML = matches.map(p => `
+      searchDropdown.innerHTML = matches.map(p => {
+        const t1 = translateType(p.types[0]);
+        const t2 = p.types[1] ? translateType(p.types[1]) : '-';
+        return `
         <div class="p-2.5 hover:bg-slate-800/80 cursor-pointer transition flex items-center justify-between text-xs" data-id="${p.speciesId}">
           <div class="flex items-center gap-2">
             <span class="text-slate-500 font-mono text-[10px]">#${p.dex || '??'}</span>
             <span class="font-bold text-slate-200">${p.name}</span>
           </div>
           <div class="flex gap-1">
-            ${p.types.map(t => `<span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">${t}</span>`).join('')}
+            <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">${t1}</span>
+            <span class="text-[9px] uppercase px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">${t2}</span>
           </div>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
 
       searchDropdown.classList.remove('hidden');
     });
@@ -469,6 +495,8 @@
       if (!item) return;
       selectPokemon(item.dataset.id);
       searchDropdown.classList.add('hidden');
+      // LIMPIAR LA BARRA DE BÚSQUEDA AL SELECCIONAR
+      searchInput.value = '';
     });
 
     document.addEventListener('click', (e) => {
@@ -477,7 +505,6 @@
       }
     });
 
-    // Subida manual si el protocolo es file://
     document.getElementById('manual-file-input').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -499,20 +526,23 @@
       selectedPokemon = pokemonDatabase.find(p => p.speciesId === speciesId);
       if (!selectedPokemon) return;
 
-      searchInput.value = selectedPokemon.name;
       document.getElementById('res-poke-name').innerText = selectedPokemon.name;
       
+      // Renderizar tipos en español oficial (si solo hay uno, el segundo muestra "-")
       const typeContainer = document.getElementById('res-types');
-      typeContainer.innerHTML = selectedPokemon.types.map(t => 
-        `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t}</span>`
-      ).join('');
+      const t1 = translateType(selectedPokemon.types[0]);
+      const t2 = selectedPokemon.types[1] ? translateType(selectedPokemon.types[1]) : '-';
+
+      typeContainer.innerHTML = `
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t1}</span>
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700">${t2}</span>
+      `;
 
       renderEvolutionChain();
       renderMovesets();
       calculateRankings();
     }
 
-    // Renderizado de la Cadena Evolutiva (En el panel izquierdo antes de los IVs)
     function renderEvolutionChain() {
       const container = document.getElementById('evolution-container');
       if (!selectedPokemon) return;
@@ -529,7 +559,7 @@
       relatives.sort((a, b) => (a.dex || 0) - (b.dex || 0));
 
       if (relatives.length === 0) {
-        container.innerHTML = `<span class="text-slate-500 italic text-[11px]">No se encontraron formas vinculadas.</span>`;
+        container.innerHTML = `<span class="text-slate-500 italic text-[11px]">No hay formas vinculadas.</span>`;
         return;
       }
 
@@ -538,7 +568,7 @@
         const arrow = (idx > 0) ? `<i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-600 shrink-0"></i>` : '';
         return `
           ${arrow}
-          <button onclick="selectPokemon('${rel.speciesId}')"
+          <button onclick="selectPokemon('${rel.speciesId}'); searchInput.value='';"
             class="px-2.5 py-1 rounded-lg border text-xs font-semibold transition flex items-center gap-1.5
             ${isCurrent 
               ? 'bg-blue-600/20 border-blue-500 text-blue-300 shadow-sm' 
@@ -552,7 +582,6 @@
       lucide.createIcons();
     }
 
-    // Renderizado de ataques recomendados PvP (En Español España)
     function renderMovesets() {
       const container = document.getElementById('moveset-container');
       if (!selectedPokemon) return;
@@ -587,14 +616,40 @@
       `;
     }
 
-    // Selectores de Liga
+    // Estilos de botones de Liga (Azul, Amarillo, Morado)
+    const leagueThemes = {
+      great: {
+        active: 'league-btn active py-2 px-2 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5',
+        subActive: 'text-blue-300'
+      },
+      ultra: {
+        active: 'league-btn active py-2 px-2 rounded-xl border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold transition flex flex-col items-center gap-0.5',
+        subActive: 'text-amber-300'
+      },
+      master: {
+        active: 'league-btn active py-2 px-2 rounded-xl border border-purple-500 bg-purple-500/20 text-purple-400 text-xs font-bold transition flex flex-col items-center gap-0.5',
+        subActive: 'text-purple-300'
+      }
+    };
+
+    function updateLeagueButtonStyles() {
+      document.querySelectorAll('.league-btn').forEach(btn => {
+        const l = btn.dataset.league;
+        const subSpan = btn.children[1];
+        if (l === selectedLeague) {
+          btn.className = leagueThemes[l].active;
+          subSpan.className = `text-[10px] font-normal ${leagueThemes[l].subActive}`;
+        } else {
+          btn.className = 'league-btn py-2 px-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5';
+          subSpan.className = 'text-[10px] font-normal text-slate-500';
+        }
+      });
+    }
+
     document.querySelectorAll('.league-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.league-btn').forEach(b => {
-          b.className = 'league-btn py-2 px-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 text-xs font-bold transition flex flex-col items-center gap-0.5';
-        });
-        btn.className = 'league-btn active py-2 px-3 rounded-xl border border-blue-500 bg-blue-500/20 text-blue-400 text-xs font-bold transition flex flex-col items-center gap-0.5';
         selectedLeague = btn.dataset.league;
+        updateLeagueButtonStyles();
         calculateRankings();
       });
     });
@@ -695,7 +750,12 @@
         }
       });
 
-      document.getElementById('res-rank').innerText = `#${userRank}`;
+      // Color del Rango acorde a la liga activa
+      const rankColor = selectedLeague === 'great' ? 'text-blue-400' : (selectedLeague === 'ultra' ? 'text-amber-400' : 'text-purple-400');
+      const rankEl = document.getElementById('res-rank');
+      rankEl.className = `text-3xl font-black ${rankColor}`;
+      rankEl.innerText = `#${userRank}`;
+
       document.getElementById('res-cp').innerText = userResult.cp;
       document.getElementById('res-level').innerText = `Nv. ${userResult.level}`;
       document.getElementById('res-product').innerText = Math.round(userResult.product / 1000) + 'k';
@@ -719,6 +779,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      updateLeagueButtonStyles();
       loadDatabase();
     });
   </script>
